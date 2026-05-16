@@ -1,13 +1,6 @@
 import { getConnection } from './db.js';
 import sql from 'mssql';
 
-/**
- * 
- * @param {string} query 
- * @param {Array} params 
- * @returns {Promise<Array>} 
- */
-
 export async function runQuery(query, params = []) {
     try {
         const pool = await getConnection();
@@ -28,8 +21,18 @@ export async function runQuery(query, params = []) {
 }
 
 
+export async function obtenerUsuarios() {
+    const query = "select Badgenumber as idempleado from USERINFO";
+    return await runQuery(query);
+}
+
+/*export async function obtenerUsuarioPorId(id) {
+    const query = "select Badgenumber as idempleado, concat(name,' ',lastname) as nombreEmpleado, DEFAULTDEPTID as DepartID, privilege as rango from USERINFO where Badgenumber = @param0";
+    return await runQuery(query, [id]);*/
+}
+
 export async function obtenerDatos() {
-    const query = "select Badgenumber as idempleado, concat(name,' ',lastname) as nombreEmpleado, DEFAULTDEPTID as DepartID,  privilege as rango from USERINFO";
+    const query = "select Badgenumber as idempleado, concat(name,' ',lastname) as nombreEmpleado, DEFAULTDEPTID as DepartID, privilege as rango from USERINFO";
     return await runQuery(query);
 }
 

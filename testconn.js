@@ -1,24 +1,17 @@
-import sql from 'mssql';
 import 'dotenv/config';
+import { obtenerDatos } from './dbOperations.js';
+import sql from 'mssql';
 
-import dbConfig from './DBConfig.mjs';
-
-async function verificarConexion() {
+async function mostrarDatos() {
     try {
-        await sql.connect(dbConfig);
-
-        console.log("Conexión exitosa a SQL Server");
-
-       // const resultado = await sql.query`SELECT * FROM USERINFO`;
-
-        //console.log(resultado.recordset);
-
+        const datos = await obtenerDatos();
+        console.log("Datos obtenidos de la base de datos:");
+        console.log(datos);
     } catch (error) {
-        console.error("Error de conexión:");
-        console.error(error);
+        console.error("Error al obtener los datos:", error);
     } finally {
         await sql.close();
     }
 }
 
-verificarConexion();
+mostrarDatos();
