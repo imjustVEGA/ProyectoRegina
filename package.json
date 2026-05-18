@@ -2,8 +2,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "node testconn.js",
-    "start": "node index.js"
+    "dev": "node backend/testconn.js",
+    "start": "node backend/index.js"
   },
   "dependencies": {
     "cors": "^2.8.6",

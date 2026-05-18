@@ -28,8 +28,8 @@ export async function obtenerUsuarios() {
 
 /*export async function obtenerUsuarioPorId(id) {
     const query = "select Badgenumber as idempleado, concat(name,' ',lastname) as nombreEmpleado, DEFAULTDEPTID as DepartID, privilege as rango from USERINFO where Badgenumber = @param0";
-    return await runQuery(query, [id]);*/
-}
+    return await runQuery(query, [id]);
+}*/
 
 export async function obtenerDatos() {
     const query = "select Badgenumber as idempleado, concat(name,' ',lastname) as nombreEmpleado, DEFAULTDEPTID as DepartID, privilege as rango from USERINFO";

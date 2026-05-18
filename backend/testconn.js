@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { obtenerDatos } from './dbOperations.js';
+import { obtenerDatos, obtenerUsuarios } from './dbOperations.js';
 import sql from 'mssql';
 
 async function mostrarDatos() {
@@ -14,4 +14,3 @@ async function mostrarDatos() {
     }
 }
 
-mostrarDatos();
