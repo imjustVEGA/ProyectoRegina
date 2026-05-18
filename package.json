@@ -2,7 +2,9 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "node backend/testconn.js",
+    "dev:frontend": "vite",
+    "dev:backend": "node backend/index.js",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "start": "node backend/index.js"
   },
   "dependencies": {
@@ -10,6 +12,11 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "mssql": "^12.5.3",
-    "tedious": "^19.2.1"
+    "node": "^22.22.3",
+    "tedious": "^19.2.1",
+    "vite": "^8.0.13"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }

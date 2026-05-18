@@ -21,19 +21,10 @@ export async function runQuery(query, params = []) {
 }
 
 
-export async function obtenerUsuarios() {
-    const query = "select Badgenumber as idempleado from USERINFO";
-    return await runQuery(query);
-}
-
-/*export async function obtenerUsuarioPorId(id) {
-    const query = "select Badgenumber as idempleado, concat(name,' ',lastname) as nombreEmpleado, DEFAULTDEPTID as DepartID, privilege as rango from USERINFO where Badgenumber = @param0";
-    return await runQuery(query, [id]);
-}*/
-
 export async function obtenerDatos() {
-    const query = "select Badgenumber as idempleado, concat(name,' ',lastname) as nombreEmpleado, DEFAULTDEPTID as DepartID, privilege as rango from USERINFO";
+    const query = "SELECT USERINFO.Badgenumber AS idempleado, CONCAT(USERINFO.name, ' ', USERINFO.lastname) AS nombreEmpleado, USERINFO.DEFAULTDEPTID AS DepartID, DEPARTMENTS.DEPTNAME AS departamento, USERINFO.privilege AS rango FROM USERINFO INNER JOIN DEPARTMENTS ON USERINFO.DEFAULTDEPTID = DEPARTMENTS.DEPTID";
     return await runQuery(query);
 }
+
 
 
