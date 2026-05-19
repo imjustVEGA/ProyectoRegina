@@ -25,7 +25,7 @@
                 <h3>Club Regina Cancún</h3>
             </div>
 
-            <form action="" class="form-container">
+            <form id="loginForm" action="" class="form-container">
                 <div class="input-group">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor">
@@ -43,17 +43,26 @@
 
                 <a href="#" class="forgot-password">Recuperar contraseña</a>
 
+                <p id="errorMsg" style="color: red; display: none; text-align: center; margin-bottom: 10px;">Credenciales incorrectas</p>
                 <button type="submit" class="submit-btn">Iniciar sesión</button>
-
-                <div class="register-link">
-                    ¿No tienes cuenta?<br>
-                    <a href="RegistroCR.html">Registrarse</a>
-                </div>
-
 
             </form>
         </div>
     </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            
+            if (user === 'admin' && pass === 'admin123') {
+                window.location.href = 'Empleados.html';
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        });
+    </script>
 </body>
 
 </html>

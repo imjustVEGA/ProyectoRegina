@@ -1,74 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - Club Regina</title>
+    <title>Registrar Empleado - Sistema Regina</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
 
-<body>
-    <div class="container">
-        <div class="image-section"></div>
-        
-        <div class="center-logo">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2L2 7l10 5 10-5-10-5zm0 7.5l-6.32-3.16L12 3.18l6.32 3.16L12 9.5zM2 12l10 5 10-5M2 17l10 5 10-5"/>
-            </svg>
-        </div>
-
-        <div class="form-section">
-            <div class="title-group" style="margin-bottom: 20px;">
-                <h1 style="font-size: 2rem;">Registro</h1>
-                <h3>Club Regina Cancún</h3>
+<body class="dashboard-body">
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i data-feather="box"></i>
             </div>
+            <h2>Club Regina</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="Menu.html"><i data-feather="home"></i> Inicio</a></li>
+            <li><a href="Empleados.html"><i data-feather="users"></i> Empleados</a></li>
+            <li><a href="Asistencias.html"><i data-feather="clock"></i> Asistencias</a></li>
+            <li class="active"><a href="RegistroCR.html"><i data-feather="user-plus"></i> Registrar Empleado</a></li>
+            <li style="margin-top: auto; margin-bottom: 20px;"><a href="Login.html" class="logout"><i
+                        data-feather="log-out"></i> Cerrar Sesión</a></li>
+        </ul>
+    </nav>
 
-            <form action="" class="form-container register-form">
-                <div class="input-group">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5l-3.9 19.5m-15-18l3.9 19.5" />
-                    </svg>
-                    <input type="text" id="idemployee" name="idemployee" placeholder="Número de empleado">
+    <main class="main-content">
+        <header class="top-header">
+            <h1>Gestión de Empleados</h1>
+        </header>
+
+        <div class="content-card">
+            <div class="card-header" style="margin-bottom: 25px;">
+                <h2 style="margin-bottom: 0;">Registrar Nuevo Empleado</h2>
+            </div>
+            
+            <form action="" class="form-container" style="max-width: 500px; margin: 0; padding: 0; box-shadow: none; background: transparent;">
+                <div class="input-group" style="position: relative; margin-bottom: 20px;">
+                    <i data-feather="hash" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0; width: 20px; height: 20px;"></i>
+                    <input type="text" id="idemployee" name="idemployee" placeholder="Número de empleado" style="padding-left: 45px; width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding-top: 15px; padding-bottom: 15px; background-color: #f8fafc; font-size: 1rem;">
                 </div>
 
-                <div class="input-group">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                    </svg>
-                    <input type="text" id="name" name="name" placeholder="Nombre">
+                <div class="input-group" style="position: relative; margin-bottom: 20px;">
+                    <i data-feather="user" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0; width: 20px; height: 20px;"></i>
+                    <input type="text" id="name" name="name" placeholder="Nombre" style="padding-left: 45px; width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding-top: 15px; padding-bottom: 15px; background-color: #f8fafc; font-size: 1rem;">
                 </div>
 
-                <div class="input-group">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                    </svg>
-                    <input type="text" id="username" name="username" placeholder="Apellido">
+                <div class="input-group" style="position: relative; margin-bottom: 20px;">
+                    <i data-feather="user" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0; width: 20px; height: 20px;"></i>
+                    <input type="text" id="username" name="username" placeholder="Apellido" style="padding-left: 45px; width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding-top: 15px; padding-bottom: 15px; background-color: #f8fafc; font-size: 1rem;">
                 </div>
 
-                <div class="input-group">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6.75h1.5m-1.5 3h1.5m-1.5 3h1.5M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
-                    </svg>
-                    <input type="text" id="department" name="department" placeholder="Departamento">
+                <div class="input-group" style="position: relative; margin-bottom: 20px;">
+                    <i data-feather="briefcase" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0; width: 20px; height: 20px;"></i>
+                    <input type="text" id="department" name="department" placeholder="Departamento" style="padding-left: 45px; width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding-top: 15px; padding-bottom: 15px; background-color: #f8fafc; font-size: 1rem;">
                 </div>
                 
-                <div class="input-group">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                    </svg>
-                    <input type="password" id="password" name="password" placeholder="Contraseña">
+                <div class="input-group" style="position: relative; margin-bottom: 20px;">
+                    <i data-feather="lock" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0; width: 20px; height: 20px;"></i>
+                    <input type="password" id="password" name="password" placeholder="Contraseña temporal" style="padding-left: 45px; width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding-top: 15px; padding-bottom: 15px; background-color: #f8fafc; font-size: 1rem;">
                 </div>
 
-                <button type="submit" class="submit-btn">Registrarse</button>
-
-                <div class="register-link">
-                    ¿Ya tienes cuenta?<br>
-                    <a href="Login.html">Iniciar sesión</a>
-                </div>
+                <button type="submit" class="submit-btn" style="margin-top: 10px; width: 100%;">Registrar Empleado</button>
             </form>
         </div>
-    </div>
+    </main>
+
+    <script>
+        feather.replace();
+    </script>
 </body>
 
 </html>
