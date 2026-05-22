@@ -1,5 +1,6 @@
 async function cargarEmpleados() {
     const tbody = document.querySelector('#tablaEmpleados tbody');
+    if (!tbody) return;
     tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 30px; color: #718096;">Cargando datos...</td></tr>';
 
     try {
@@ -35,5 +36,44 @@ async function cargarEmpleados() {
     } catch (error) {
         console.error("Error al cargar empleados:", error);
         tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 30px; color: #e53e3e;">Ocurrió un error al cargar los datos.<br><small>${error.message}</small></td></tr>`;
+    }
+}
+
+async function cargarAsistencias() {
+    const tbody = document.querySelector('#tablaAsistencias tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 30px; color: #718096;">Cargando datos...</td></tr>';
+
+    try {
+        const response = await fetch('http://localhost:3000/asistencias');
+        if (!response.ok) throw new Error('Error al conectar con el servidor');
+
+        const datos = await response.json();
+
+        if (!datos || datos.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 30px; color: #718096;">No se encontraron asistencias.</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = '';
+
+        datos.forEach(asis => {
+            const tr = document.createElement('tr');
+
+            tr.innerHTML = `
+                <td><span class="badge badge-id"># ${asis.idEmpleado || 'N/D'}</span></td>
+                <td style="font-weight: 500; color: #2d3748;">${asis.nomEmpleado || 'N/D'}</td>
+                <td>${asis.puesto || 'N/D'}</td>
+                <td>${asis.fecha || 'N/D'}</td>
+                <td>${asis.hora || 'N/D'}</td>
+                <td><span class="badge badge-role">${asis.verificacion || 'N/D'}</span></td>
+                <td><span class="badge badge-role">${asis.estado || 'N/D'}</span></td>
+                <td>${asis.dispotivo || 'N/D'}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    } catch (error) {
+        console.error("Error al cargar asistencias:", error);
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 30px; color: #e53e3e;">Ocurrió un error al cargar los datos.<br><small>${error.message}</small></td></tr>`;
     }
 }

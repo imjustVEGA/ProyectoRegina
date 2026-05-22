@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
-import { runQuery, obtenerUsuarios, obtenerDatos } from './dbOperations.js';
+import { runQuery, obtenerUsuarios, obtenerDatos, obtenerAsistencias } from './dbOperations.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +15,15 @@ app.get('/users', async (req, res) => {
         res.json(users);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener los datos' });
+    }
+});
+
+app.get('/asistencias', async (req, res) => {
+    try {
+        const asistencias = await obtenerAsistencias();
+        res.json(asistencias);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener las asistencias' });
     }
 });
 
