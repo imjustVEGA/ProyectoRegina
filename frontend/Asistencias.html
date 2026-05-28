@@ -43,6 +43,25 @@
                 </button>
             </div>
 
+            <div class="filters-container" style="margin-bottom: 20px; display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+                <div style="flex: 1; min-width: 200px;">
+                    <input type="text" id="busquedaAsistencia" placeholder="Buscar por nombre o ID..." onkeyup="filtrarAsistencias()" style="padding: 10px; width: 100%; border-radius: 8px; border: 1px solid #ccc;">
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="fechaInicio" style="font-weight: 500; color: #4a5568;">Desde:</label>
+                    <input type="date" id="fechaInicio" onchange="filtrarAsistencias()" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="fechaFin" style="font-weight: 500; color: #4a5568;">Hasta:</label>
+                    <input type="date" id="fechaFin" onchange="filtrarAsistencias()" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+                </div>
+                
+                <button class="submit-btn" style="width: auto; padding: 10px 20px; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; border-radius: 12px; background-color: #2b6cb0; color: white; border: none; cursor: pointer;" onclick="generarReporteAsistencias()">
+                    <i data-feather="download" style="width: 16px; height: 16px; margin-right: 8px;"></i> Reporte CSV
+                </button>
+            </div>
+
             <div class="table-responsive">
                 <table class="data-table" id="tablaAsistencias">
                     <thead>

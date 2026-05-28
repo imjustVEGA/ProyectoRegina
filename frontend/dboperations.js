@@ -77,3 +77,96 @@ async function cargarAsistencias() {
         tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 30px; color: #e53e3e;">Ocurrió un error al cargar los datos.<br><small>${error.message}</small></td></tr>`;
     }
 }
+
+function filtrarEmpleados() {
+    const input = document.getElementById('busquedaNombreEmpleado');
+    const filter = input.value.toLowerCase();
+    const table = document.getElementById('tablaEmpleados');
+    const tr = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < tr.length; i++) {
+        if (tr[i].cells.length === 1) continue;
+        
+        const tdNombre = tr[i].getElementsByTagName('td')[1]; 
+        if (tdNombre) {
+            const txtValue = tdNombre.textContent || tdNombre.innerText;
+            if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+function filtrarAsistencias() {
+    const inputBusqueda = document.getElementById('busquedaAsistencia').value.toLowerCase();
+    const fechaInicio = document.getElementById('fechaInicio').value;
+    const fechaFin = document.getElementById('fechaFin').value;
+    
+    const table = document.getElementById('tablaAsistencias');
+    const tr = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < tr.length; i++) {
+        if (tr[i].cells.length === 1) continue; 
+
+        const tdID = tr[i].getElementsByTagName('td')[0];
+        const tdNombre = tr[i].getElementsByTagName('td')[1];
+        const tdFecha = tr[i].getElementsByTagName('td')[3];
+        
+        if (tdNombre && tdFecha && tdID) {
+            const txtNombre = tdNombre.textContent || tdNombre.innerText;
+            const txtID = tdID.textContent || tdID.innerText;
+            const txtFecha = tdFecha.textContent || tdFecha.innerText; 
+            
+            let coincideBusqueda = txtNombre.toLowerCase().indexOf(inputBusqueda) > -1 || txtID.toLowerCase().indexOf(inputBusqueda) > -1;
+            
+            let coincideFecha = true;
+            let strFila = txtFecha;
+            if (strFila) {
+                strFila = strFila.split('T')[0].trim();
+                if (fechaInicio && strFila < fechaInicio) coincideFecha = false;
+                if (fechaFin && strFila > fechaFin) coincideFecha = false;
+            }
+            
+            if (coincideBusqueda && coincideFecha) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+function generarReporteAsistencias() {
+    const table = document.getElementById('tablaAsistencias');
+    const tr = table.getElementsByTagName('tr');
+    
+    let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
+    
+    
+    csvContent += "ID Empleado,Nombre Completo,Puesto,Fecha,Hora,Verificacion,Estado,Dispositivo\n";
+    
+    for (let i = 1; i < tr.length; i++) {
+        if (tr[i].style.display !== "none" && tr[i].cells.length > 1) {
+            let rowContent = [];
+            for (let j = 0; j < tr[i].cells.length; j++) {
+                let text = tr[i].cells[j].innerText || tr[i].cells[j].textContent;
+                text = text.replace(/(\r\n|\n|\r|,)/gm, " ").trim();
+                if (j === 0 && text.startsWith("# ")) {
+                    text = text.substring(2);
+                }
+                rowContent.push(`"${text}"`);
+            }
+            csvContent += rowContent.join(",") + "\n";
+        }
+    }
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "reporte_asistencias.csv");
+    document.body.appendChild(link); 
+    link.click();
+    document.body.removeChild(link);
+}
