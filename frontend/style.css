@@ -17,19 +17,15 @@ body {
 
 .container {
     display: flex;
-    width: 1000px;
-    max-width: 95%;
-    height: 600px;
+    width: 100vw;
+    height: 100vh;
     background-color: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
     position: relative;
 }
 
 .image-section {
     flex: 1;
-    background-image: url('hotel_bg.png');
+    background-image: url('C:/Users/paola/OneDrive/Desktop/ProyectoRegina/imagenes/CLUBREGINA.jpg');
     background-size: cover;
     background-position: center;
     position: relative;
@@ -50,8 +46,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 90px;
-    height: 90px;
+    width: 160px;
+    height: 160px;
     background-color: white;
     border-radius: 25px;
     display: flex;
@@ -60,12 +56,24 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     z-index: 10;
     border: 3px solid #0b5c6b;
+    padding: 15px;
 }
 
-.center-logo svg {
-    width: 50px;
-    height: 50px;
-    color: #0b5c6b;
+.center-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f5efeb;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
 .title-group {
@@ -75,47 +83,40 @@ body {
 
 .title-group h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 2.8rem;
+    font-size: 3.5rem;
     color: #617381;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .title-group h3 {
     font-family: 'Inter', sans-serif;
-    font-size: 1rem;
+    font-size: 1.3rem;
     color: #90a0b2;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.form-container {
-    width: 100%;
-    max-width: 320px;
-    display: flex;
-    flex-direction: column;
+    letter-spacing: 2px;
 }
 
 .input-group {
     position: relative;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
 }
 
 .input-group svg {
     position: absolute;
     left: 0;
-    bottom: 12px;
-    width: 20px;
-    height: 20px;
+    bottom: 15px;
+    width: 24px;
+    height: 24px;
     color: #4a5568;
 }
 
 .input-group input {
     width: 100%;
-    padding: 10px 10px 10px 35px;
+    padding: 15px 15px 15px 40px;
     border: none;
-    border-bottom: 1.5px solid #cbd5e0;
-    font-size: 1rem;
+    border-bottom: 2px solid #cbd5e0;
+    font-size: 1.2rem;
     color: #2d3748;
     outline: none;
     background: transparent;
@@ -131,12 +132,12 @@ body {
 }
 
 .forgot-password {
-    font-size: 0.75rem;
+    font-size: 1rem;
     color: #718096;
     text-decoration: none;
     align-self: flex-start;
     margin-top: -15px;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
 .forgot-password:hover {
@@ -145,57 +146,23 @@ body {
 
 .submit-btn {
     width: 100%;
-    padding: 14px;
-    background-color: #f3ede7;
+    padding: 18px;
+    background-color: #ffffff;
     color: #617381;
-    border: none;
-    border-radius: 30px;
-    font-size: 1.05rem;
+    border: 2px solid #617381;
+    border-radius: 35px;
+    font-size: 1.2rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
 }
 
 .submit-btn:hover {
-    background-color: #e2d9cf;
+    background-color: #0a4f5d !important;
+    border-color: #0a4f5d;
+    color: #ffffff;
     transform: translateY(-2px);
 }
-
-.register-link {
-    margin-top: 30px;
-    font-size: 0.85rem;
-    color: #4a5568;
-    text-align: center;
-}
-
-.register-link a {
-    color: #617381;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.register-link a:hover {
-    text-decoration: underline;
-}
-
-/* Register specific styles to fit more inputs */
-.register-form .input-group {
-    margin-bottom: 15px;
-}
-
-.register-form .input-group svg {
-    bottom: 8px;
-}
-
-.register-form .input-group input {
-    padding: 8px 10px 8px 35px;
-}
-
-.register-form .submit-btn {
-    margin-top: 15px;
-}
-
-/* --- Estilos para el Dashboard (Menu, Empleados, Asistencias) --- */
 
 .dashboard-body {
     display: flex;
@@ -222,17 +189,6 @@ body {
     padding: 30px 20px;
     border-bottom: 1px solid #f0f2f5;
 }
-
-/*.sidebar-header .logo {
-    width: 40px;
-    height: 40px;
-    background-color: #0b5c6b;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 15px;
-}*/
 
 .sidebar-header .logo svg {
     color: white;
@@ -376,8 +332,6 @@ body {
     color: #718096;
 }
 
-/* --- Estilos para Tablas --- */
-
 .table-responsive {
     width: 100%;
     overflow-x: auto;
@@ -416,7 +370,6 @@ body {
     background-color: #f8fafc;
 }
 
-/* Badges para resaltar datos en la tabla */
 .badge {
     display: inline-block;
     padding: 6px 12px;
@@ -433,8 +386,4 @@ body {
 .badge-role {
     background-color: #e6f6f8;
     color: #0b5c6b;
-}
-
-.submit-btn:hover {
-    background-color: #0a4f5d !important;
 }
