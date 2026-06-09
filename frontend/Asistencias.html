@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asistencias - Sistema Regina</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
 
 <body class="dashboard-body">
@@ -14,7 +15,7 @@
             <div class="logo">
                 <i data-feather="box"></i>
             </div>
-            <h2>Regina</h2>
+            <h2>Club Regina</h2>
         </div>
         <ul class="nav-links">
             <li><a href="Menu.html"><i data-feather="home"></i> Inicio</a></li>
@@ -32,13 +33,64 @@
         </header>
 
         <div class="content-card">
-            <h2>Registro de Asistencias</h2>
-            <p>no hay nada xd</p>
+            <div class="card-header"
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <h2 style="margin-bottom: 0;">Registro de Asistencias</h2>
+                <button class="submit-btn"
+                    style="width: auto; padding: 10px 20px; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; border-radius: 12px; background-color: #0b5c6b; color: white;"
+                    onclick="cargarAsistencias()">
+                    <i data-feather="refresh-cw" style="width: 16px; height: 16px; margin-right: 8px;"></i> Actualizar
+                </button>
+            </div>
+
+            <div class="filters-container" style="margin-bottom: 20px; display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+                <div style="flex: 1; min-width: 200px;">
+                    <input type="text" id="busquedaAsistencia" placeholder="Buscar por nombre o ID..." onkeyup="filtrarAsistencias()" style="padding: 10px; width: 100%; border-radius: 8px; border: 1px solid #ccc;">
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="fechaInicio" style="font-weight: 500; color: #4a5568;">Desde:</label>
+                    <input type="date" id="fechaInicio" onchange="filtrarAsistencias()" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="fechaFin" style="font-weight: 500; color: #4a5568;">Hasta:</label>
+                    <input type="date" id="fechaFin" onchange="filtrarAsistencias()" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+                </div>
+                
+                <button class="submit-btn" style="width: auto; padding: 10px 20px; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; border-radius: 12px; background-color: #2b6cb0; color: white; border: none; cursor: pointer;" onclick="generarReporteAsistencias()">
+                    <i data-feather="download" style="width: 16px; height: 16px; margin-right: 8px;"></i> Reporte CSV
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="data-table" id="tablaAsistencias">
+                    <thead>
+                        <tr>
+                            <th>ID Empleado</th>
+                            <th>Nombre Completo</th>
+                            <th>Puesto</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Verificación</th>
+                            <th>Estado</th>
+                            <th>Dispositivo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="8" style="text-align: center; padding: 30px; color: #718096;">Cargando datos...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
 
+    <script src="dboperations.js"></script>
     <script>
         feather.replace();
+        document.addEventListener('DOMContentLoaded', cargarAsistencias);
     </script>
 </body>
 

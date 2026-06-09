@@ -28,7 +28,7 @@ body {
 
 .seccion-imagen {
     flex: 1;
-    background-image: url('C:/Users/paola/OneDrive/Desktop/ProyectoRegina/imagenes/CLUBREGINA.jpg');
+    background-image: url('C:\Users\omana\OneDrive\Escritorio\ProyectoRegina\imagenes\CLUBREGINA.jpg');
     background-size: cover;
     background-position: center;
     position: relative;
@@ -522,9 +522,60 @@ button svg {
     text-align: center;
 }
 
+
 .envoltorio-icono-error {
     width: 60px;
     height: 60px;
+
+.nav-links li a svg {
+    margin-right: 15px;
+    width: 20px;
+    height: 20px;
+}
+
+.nav-links li a:hover {
+    background-color: #f3ede7;
+    color: #0b5c6b;
+}
+
+.nav-links li.active a {
+    background-color: #0b5c6b;
+    color: white;
+    box-shadow: 0 4px 15px rgba(11, 92, 107, 0.2);
+}
+
+.nav-links li a.logout {
+    color: #e53e3e;
+}
+
+.nav-links li a.logout:hover {
+    background-color: #fff5f5;
+}
+
+.main-content {
+    flex: 1; 
+    height: 100vh;
+    overflow-y: auto;
+    padding: 30px 40px;
+}
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.top-header h1 {
+    font-family: 'Playfair Display', serif;
+    color: #2d3748;
+    font-size: 2.2rem;
+}
+
+.user-profile img {
+    width: 45px;
+    height: 45px;
+
     border-radius: 50%;
     background-color: #e0f2f1;
     display: flex;
@@ -566,4 +617,5 @@ button svg {
 .btn-accion-tabla:hover {
     background-color: #e5e7eb;
     color: #1f2937;
+}
 }
