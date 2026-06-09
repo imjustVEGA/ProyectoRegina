@@ -500,7 +500,7 @@ button svg {
 }
 
 .tabla-datos tbody tr:hover td {
-    background-color: #f9fafb;
+    background-color: #f9fafb;  
 }
 
 .celda-carga {
