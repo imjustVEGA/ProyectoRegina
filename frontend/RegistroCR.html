@@ -9,61 +9,60 @@
     <script src="https://unpkg.com/feather-icons"></script>
 </head>
 
-<body class="dashboard-body">
-    <nav class="sidebar">
-        <div class="sidebar-header">
+<body class="cuerpo-panel">
+    <nav class="barra-lateral">
+        <div class="cabecera-lateral">
             <div class="logo">
                 <i data-feather="box"></i>
             </div>
             <h2>Club Regina</h2>
         </div>
-        <ul class="nav-links">
+        <ul class="enlaces-nav">
             <li><a href="Menu.html"><i data-feather="home"></i> Inicio</a></li>
             <li><a href="Empleados.html"><i data-feather="users"></i> Empleados</a></li>
             <li><a href="Asistencias.html"><i data-feather="clock"></i> Asistencias</a></li>
-            <li class="active"><a href="RegistroCR.html"><i data-feather="user-plus"></i> Registrar Empleado</a></li>
-            <li style="margin-top: auto; margin-bottom: 20px;"><a href="Login.html" class="logout"><i
-                        data-feather="log-out"></i> Cerrar Sesión</a></li>
+            <li class="activo"><a href="RegistroCR.html"><i data-feather="user-plus"></i> Registrar Empleado</a></li>
+            <li style="margin-top: auto; margin-bottom: 20px;"><a href="Login.html" class="cerrar-sesion"><i data-feather="log-out"></i> Cerrar Sesión</a></li>
         </ul>
     </nav>
 
-    <main class="main-content">
-        <header class="top-header">
+    <main class="contenido-principal">
+        <header class="cabecera-superior">
             <h1>Gestión de Empleados</h1>
         </header>
 
-        <div class="content-card">
-            <div class="card-header" style="margin-bottom: 25px;">
+        <div class="tarjeta-contenido">
+            <div class="cabecera-tarjeta" style="margin-bottom: 25px;">
                 <h2 style="margin-bottom: 0;">Registrar Nuevo Empleado</h2>
             </div>
             
-            <form action="" class="form-container" style="max-width: 500px; margin: 0; padding: 0; box-shadow: none; background: transparent;">
-                <div class="input-group" style="position: relative; margin-bottom: 20px;">
+            <form action="" class="contenedor-formulario" style="max-width: 500px; margin: 0; padding: 0; box-shadow: none; background: transparent;">
+                <div class="bloque-entrada" style="position: relative; margin-bottom: 20px;">
                     <i data-feather="hash" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0; width: 20px; height: 20px;"></i>
                     <input type="text" id="idemployee" name="idemployee" placeholder="Número de empleado" style="padding-left: 45px; width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding-top: 15px; padding-bottom: 15px; background-color: #f8fafc; font-size: 1rem;">
                 </div>
 
-                <div class="input-group" style="position: relative; margin-bottom: 20px;">
+                <div class="bloque-entrada" style="position: relative; margin-bottom: 20px;">
                     <i data-feather="user" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0; width: 20px; height: 20px;"></i>
                     <input type="text" id="name" name="name" placeholder="Nombre" style="padding-left: 45px; width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding-top: 15px; padding-bottom: 15px; background-color: #f8fafc; font-size: 1rem;">
                 </div>
 
-                <div class="input-group" style="position: relative; margin-bottom: 20px;">
+                <div class="bloque-entrada" style="position: relative; margin-bottom: 20px;">
                     <i data-feather="user" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0; width: 20px; height: 20px;"></i>
                     <input type="text" id="username" name="username" placeholder="Apellido" style="padding-left: 45px; width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding-top: 15px; padding-bottom: 15px; background-color: #f8fafc; font-size: 1rem;">
                 </div>
 
-                <div class="input-group" style="position: relative; margin-bottom: 20px;">
+                <div class="bloque-entrada" style="position: relative; margin-bottom: 20px;">
                     <i data-feather="briefcase" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0; width: 20px; height: 20px;"></i>
                     <input type="text" id="department" name="department" placeholder="Departamento" style="padding-left: 45px; width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding-top: 15px; padding-bottom: 15px; background-color: #f8fafc; font-size: 1rem;">
                 </div>
                 
-                <div class="input-group" style="position: relative; margin-bottom: 20px;">
+                <div class="bloque-entrada" style="position: relative; margin-bottom: 20px;">
                     <i data-feather="lock" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0; width: 20px; height: 20px;"></i>
                     <input type="password" id="password" name="password" placeholder="Contraseña temporal" style="padding-left: 45px; width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding-top: 15px; padding-bottom: 15px; background-color: #f8fafc; font-size: 1rem;">
                 </div>
 
-                <button type="submit" class="submit-btn" style="margin-top: 10px; width: 100%;">Registrar Empleado</button>
+                <button type="submit" class="btn-enviar" style="margin-top: 10px; width: 100%;">Registrar Empleado</button>
             </form>
         </div>
     </main>

@@ -6,70 +6,220 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empleados - Club Regina</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
-
 </head>
 
-<body class="dashboard-body">
-    <nav class="sidebar">
-        <div class="sidebar-header">
-            <div class="logo">
-                <i data-feather="box"></i>
-            </div>
-            <h2>Club Regina</h2>
+<body class="cuerpo-panel">
+    <nav class="barra-navegacion-superior">
+        <div class="nav-izquierda">
+            <img src="imagenes/logoooo.png" alt="" class="img-logo">
+            <span class="texto-logo">Logo Club Regina</span>
         </div>
-        <ul class="nav-links">
+
+        <ul class="enlaces-nav">
             <li><a href="Menu.html"><i data-feather="home"></i> Inicio</a></li>
-            <li class="active"><a href="Empleados.html"><i data-feather="users"></i> Empleados</a></li>
+            <li class="activo"><a href="Empleados.html"><i data-feather="users"></i> Empleados</a></li>
             <li><a href="Asistencias.html"><i data-feather="clock"></i> Asistencias</a></li>
             <li><a href="RegistroCR.html"><i data-feather="user-plus"></i> Registrar Empleado</a></li>
-            <li style="margin-top: auto; margin-bottom: 20px;"><a href="Login.html" class="logout"><i
-                        data-feather="log-out"></i> Cerrar Sesión</a></li>
         </ul>
+
+        <div class="nav-derecha">
+            <a href="Login.html" class="cerrar-sesion"><i data-feather="log-out"></i> Cerrar Sesión</a>
+        </div>
     </nav>
 
-    <main class="main-content">
-        <header class="top-header">
-            <h1>Gestión de Empleados</h1>
-        </header>
-
-        <div class="content-card">
-            <div class="card-header"
-                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-                <h2 style="margin-bottom: 0;">Lista de Empleados</h2>
-                <button class="submit-btn"
-                    style="width: auto; padding: 10px 20px; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; border-radius: 12px; background-color: #0b5c6b; color: white;"
-                    onclick="cargarEmpleados()">
-                    <i data-feather="refresh-cw" style="width: 16px; height: 16px; margin-right: 8px;"></i> Actualizar
-                </button>
+    <main class="contenido-principal">
+        <div class="recuadro-grande">
+            <div class="destacado-izquierda">
+                <div class="icono-destacado">
+                    <i data-feather="users"></i>
+                </div>
+                <div class="texto-destacado">
+                    <h1>Gestión de Empleados</h1>
+                </div>
             </div>
-
-            <div class="table-responsive">
-                <table class="data-table" id="tablaEmpleados">
-                    <thead>
-                        <tr>
-                            <th>ID Empleado</th>
-                            <th>Nombre Completo</th>
-                            <th>Departamento</th>
-                            <th>Nombre del Departamento</th>
-                            <th>Rango</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="5" style="text-align: center; padding: 30px; color: #718096;">Cargando datos...
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="destacado-derecha">
+                <button class="btn-blanco" onclick="window.location.href='RegistroCR.html'"><i data-feather="user-plus"></i> Nuevo Empleado</button> 
+                <button class="btn-contorno" onclick="cargarEmpleados()"><i data-feather="refresh-cw"></i> Actualizar</button>
             </div>
+        </div>
+
+        <div class="contenedor-estadisticas">
+            <div class="tarjeta-estadistica">
+                <div class="icono-estadistica fondo-verde-azulado-claro"><i data-feather="users"></i></div>
+                <div class="datos-estadistica">
+                    <h3 id="estadisticaTotalEmpleados">0</h3>
+                    <p class="titulo-estadistica">Empleados</p>
+                    <p class="subtitulo-estadistica">Total registrados</p>
+                </div>
+            </div>
+            <div class="tarjeta-estadistica">
+                <div class="icono-estadistica fondo-gris-claro"><i data-feather="building"></i></div>
+                <div class="datos-estadistica">
+                    <h3 id="estadisticaTotalDeptos">0</h3>
+                    <p class="titulo-estadistica">Departamentos</p>
+                    <p class="subtitulo-estadistica">Áreas activas</p>
+                </div>
+            </div>
+            <div class="tarjeta-estadistica">
+                <div class="icono-estadistica fondo-gris-claro"><i data-feather="award"></i></div>
+                <div class="datos-estadistica">
+                    <h3 id="estadisticaTotalSupervisores">0</h3>
+                    <p class="titulo-estadistica">Supervisores</p>
+                    <p class="subtitulo-estadistica">Con personal a cargo</p>
+                </div>
+            </div>
+            <div class="tarjeta-estadistica">
+                <div class="icono-estadistica fondo-gris-claro"><i data-feather="user-check"></i></div>
+                <div class="datos-estadistica">
+                    <h3 id="estadisticaNuevosMes">0</h3>
+                    <p class="titulo-estadistica">Nuevos este mes</p>
+                    <p class="subtitulo-estadistica">Últimos 30 días</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contenedor-filtros">
+            <div class="caja-busqueda">
+                <i data-feather="search"></i>
+                <input type="text" id="campoBuscar" placeholder="Buscar empleado..." onkeyup="filtrarEmpleados()">
+            </div>
+            <div class="caja-seleccion">
+                <i data-feather="building"></i>
+                <select id="seleccionDepto" onchange="filtrarEmpleados()">
+                    <option value="">Todos los departamentos</option>
+                </select>
+            </div>
+            <div class="caja-seleccion">
+                <i data-feather="award"></i>
+                <select id="seleccionRango" onchange="filtrarEmpleados()">
+                    <option value="">Todos los rangos</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="contenedor-tabla">
+            <table class="tabla-datos" id="tablaEmpleados">
+                <thead>
+                    <tr>
+                        <th>ID EMPLEADO</th>
+                        <th>NOMBRE COMPLETO</th>
+                        <th>DEPARTAMENTO</th>
+                        <th>NOMBRE DEL DEPARTAMENTO</th>
+                        <th>RANGO</th>
+                        <th>ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpoTabla">
+                    <tr>
+                        <td colspan="6" class="celda-carga">Cargando datos de la base de datos...</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </main>
 
     <script src="dboperations.js"></script>
     <script>
-        feather.replace();
-        document.addEventListener('DOMContentLoaded', cargarEmpleados);
+        let datosOriginales = [];
+
+        async function cargarEmpleados() {
+            const tbody = document.getElementById('cuerpoTabla');
+            tbody.innerHTML = `<tr><td colspan="6" class="celda-carga">Cargando datos...</td></tr>`;
+            
+            try {
+                const empleados = await obtenerDatos();
+                datosOriginales = empleados;
+                renderizarTabla(empleados);
+                cargarFiltros(empleados);
+                actualizarTarjetas(empleados);
+            } catch (error) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="celda-error">
+                            <div class="estado-error">
+                                <div class="envoltorio-icono-error"><i data-feather="inbox"></i></div>
+                                <h4>Ocurrió un error al cargar los datos.</h4>
+                                <p>${error.message || error}</p>
+                                <button class="btn-verde-azulado" onclick="cargarEmpleados()"><i data-feather="refresh-cw"></i> Reintentar</button>
+                            </div>
+                        </td>
+                    </tr>`;
+                feather.replace();
+            }
+        }
+
+        function actualizarTarjetas(lista) {
+            document.getElementById('estadisticaTotalEmpleados').innerText = lista.length;
+
+            const deptosUnicos = new Set(lista.map(emp => emp.departamento));
+            document.getElementById('estadisticaTotalDeptos').innerText = deptosUnicos.size;
+
+            const supervisores = lista.filter(emp => emp.rango == '14' || emp.rango === 14 || emp.rango.toString().toLowerCase().includes('supervisor'));
+            document.getElementById('estadisticaTotalSupervisores').innerText = supervisores.length;
+
+            document.getElementById('estadisticaNuevosMes').innerText = "0"; 
+        }
+
+        function renderizarTabla(lista) {
+            const tbody = document.getElementById('cuerpoTabla');
+            if (lista.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="celda-carga">No se encontraron empleados.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = lista.map(emp => `
+                <tr>
+                    <td>${emp.idempleado}</td>
+                    <td>${emp.nombreEmpleado}</td>
+                    <td>${emp.DepartID}</td>
+                    <td>${emp.departamento}</td>
+                    <td>${emp.rango}</td>
+                    <td class="celda-acciones">
+                        <button class="btn-accion-tabla" onclick="editarEmpleado('${emp.idempleado}')"><i data-feather="edit-2"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+            feather.replace();
+        }
+
+        function cargarFiltros(lista) {
+            const deptos = [...new Set(lista.map(e => e.departamento))].filter(Boolean);
+            const rangos = [...new Set(lista.map(e => e.rango))].filter(Boolean);
+
+            const seleccionDepto = document.getElementById('seleccionDepto');
+            seleccionDepto.innerHTML = '<option value="">Todos los departamentos</option>' + 
+                deptos.map(d => `<option value="${d}">${d}</option>`).join('');
+
+            const seleccionRango = document.getElementById('seleccionRango');
+            seleccionRango.innerHTML = '<option value="">Todos los rangos</option>' + 
+                rangos.map(r => `<option value="${r}">${r}</option>`).join('');
+        }
+
+        function filtrarEmpleados() {
+            const busqueda = document.getElementById('campoBuscar').value.toLowerCase();
+            const deptoSel = document.getElementById('seleccionDepto').value;
+            const rangoSel = document.getElementById('seleccionRango').value;
+
+            const filtrados = datosOriginales.filter(emp => {
+                const nombreEmp = emp.nombreEmpleado ? emp.nombreEmpleado.toLowerCase() : "";
+                const idEmp = emp.idempleado ? emp.idempleado.toString() : "";
+                
+                const cumpleBusqueda = nombreEmp.includes(busqueda) || idEmp.includes(busqueda);
+                const cumpleDepto = deptoSel === "" || emp.departamento === deptoSel;
+                const cumpleRango = rangoSel === "" || emp.rango.toString() === rangoSel;
+                
+                return cumpleBusqueda && cumpleDepto && cumpleRango;
+            });
+
+            renderizarTabla(filtrados);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+            cargarEmpleados();
+        });
     </script>
 </body>
 

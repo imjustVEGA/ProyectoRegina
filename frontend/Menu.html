@@ -1,14 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Principal</title>
+    <title>Menu Principal - Sistema Regina</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
 
-<body>
+<body class="cuerpo-panel">
+    <nav class="barra-lateral">
+        <div class="cabecera-lateral">
+            <div class="logo">
+                <i data-feather="box"></i>
+            </div>
+            <h2>Club Regina</h2>
+        </div>
+        <ul class="enlaces-nav">
+            <li class="activo"><a href="Menu.html"><i data-feather="home"></i> Inicio</a></li>
+            <li><a href="Empleados.html"><i data-feather="users"></i> Empleados</a></li>
+            <li><a href="Asistencias.html"><i data-feather="clock"></i> Asistencias</a></li>
+            <li><a href="RegistroCR.html"><i data-feather="user-plus"></i> Registrar Empleado</a></li>
+            <li style="margin-top: auto; margin-bottom: 20px;"><a href="Login.html" class="cerrar-sesion"><i data-feather="log-out"></i> Cerrar Sesión</a></li>
+        </ul>
+    </nav>
 
+    <main class="contenido-principal">
+        <header class="cabecera-superior">
+            <h1>Bienvenido al Menú Principal</h1>
+        </header>
+
+        <div class="tarjeta-contenido">
+            <h2>Selecciona una opción en el menú izquierdo</h2>
+            <p>Aquí puedes poner tu contenido principal para el inicio.</p>
+        </div>
+    </main>
+
+    <script>
+        feather.replace();
+    </script>
 </body>
 
 </html>
