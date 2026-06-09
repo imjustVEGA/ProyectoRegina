@@ -33,6 +33,21 @@ async function cargarEmpleados() {
             `;
             tbody.appendChild(tr);
         });
+
+        const deptSelect = document.getElementById('filtroDepartamentoEmpleado');
+        if (deptSelect) {
+            deptSelect.innerHTML = '<option value="">Todos los departamentos</option>';
+            const depts = new Set();
+            datos.forEach(emp => {
+                if (emp.departamento) depts.add(emp.departamento);
+            });
+            depts.forEach(d => {
+                const option = document.createElement('option');
+                option.value = d.toLowerCase();
+                option.textContent = d;
+                deptSelect.appendChild(option);
+            });
+        }
     } catch (error) {
         console.error("Error al cargar empleados:", error);
         tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 30px; color: #e53e3e;">Ocurrió un error al cargar los datos.<br><small>${error.message}</small></td></tr>`;
@@ -72,6 +87,21 @@ async function cargarAsistencias() {
             `;
             tbody.appendChild(tr);
         });
+
+        const areaSelect = document.getElementById('filtroDepartamentoAsistencia');
+        if (areaSelect) {
+            areaSelect.innerHTML = '<option value="">Todas las áreas / puestos</option>';
+            const areas = new Set();
+            datos.forEach(asis => {
+                if (asis.puesto) areas.add(asis.puesto);
+            });
+            areas.forEach(a => {
+                const option = document.createElement('option');
+                option.value = a.toLowerCase();
+                option.textContent = a;
+                areaSelect.appendChild(option);
+            });
+        }
     } catch (error) {
         console.error("Error al cargar asistencias:", error);
         tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 30px; color: #e53e3e;">Ocurrió un error al cargar los datos.<br><small>${error.message}</small></td></tr>`;
@@ -81,6 +111,8 @@ async function cargarAsistencias() {
 function filtrarEmpleados() {
     const input = document.getElementById('busquedaNombreEmpleado');
     const filter = input.value.toLowerCase();
+    const deptoSelect = document.getElementById('filtroDepartamentoEmpleado');
+    const deptoFilter = deptoSelect ? deptoSelect.value : "";
     const table = document.getElementById('tablaEmpleados');
     const tr = table.getElementsByTagName('tr');
 
@@ -88,9 +120,16 @@ function filtrarEmpleados() {
         if (tr[i].cells.length === 1) continue;
         
         const tdNombre = tr[i].getElementsByTagName('td')[1]; 
-        if (tdNombre) {
+        const tdDepto = tr[i].getElementsByTagName('td')[3]; 
+        
+        if (tdNombre && tdDepto) {
             const txtValue = tdNombre.textContent || tdNombre.innerText;
-            if (txtValue.toLowerCase().indexOf(filter) > -1) {
+            const txtDepto = tdDepto.textContent || tdDepto.innerText;
+            
+            const coincideNombre = txtValue.toLowerCase().indexOf(filter) > -1;
+            const coincideDepto = deptoFilter === "" || txtDepto.toLowerCase() === deptoFilter;
+            
+            if (coincideNombre && coincideDepto) {
                 tr[i].style.display = "";
             } else {
                 tr[i].style.display = "none";
@@ -103,6 +142,8 @@ function filtrarAsistencias() {
     const inputBusqueda = document.getElementById('busquedaAsistencia').value.toLowerCase();
     const fechaInicio = document.getElementById('fechaInicio').value;
     const fechaFin = document.getElementById('fechaFin').value;
+    const areaSelect = document.getElementById('filtroDepartamentoAsistencia');
+    const areaFilter = areaSelect ? areaSelect.value : "";
     
     const table = document.getElementById('tablaAsistencias');
     const tr = table.getElementsByTagName('tr');
@@ -112,14 +153,17 @@ function filtrarAsistencias() {
 
         const tdID = tr[i].getElementsByTagName('td')[0];
         const tdNombre = tr[i].getElementsByTagName('td')[1];
+        const tdArea = tr[i].getElementsByTagName('td')[2];
         const tdFecha = tr[i].getElementsByTagName('td')[3];
         
-        if (tdNombre && tdFecha && tdID) {
+        if (tdNombre && tdFecha && tdID && tdArea) {
             const txtNombre = tdNombre.textContent || tdNombre.innerText;
             const txtID = tdID.textContent || tdID.innerText;
+            const txtArea = tdArea.textContent || tdArea.innerText;
             const txtFecha = tdFecha.textContent || tdFecha.innerText; 
             
             let coincideBusqueda = txtNombre.toLowerCase().indexOf(inputBusqueda) > -1 || txtID.toLowerCase().indexOf(inputBusqueda) > -1;
+            let coincideArea = areaFilter === "" || txtArea.toLowerCase() === areaFilter;
             
             let coincideFecha = true;
             let strFila = txtFecha;
@@ -129,7 +173,7 @@ function filtrarAsistencias() {
                 if (fechaFin && strFila > fechaFin) coincideFecha = false;
             }
             
-            if (coincideBusqueda && coincideFecha) {
+            if (coincideBusqueda && coincideFecha && coincideArea) {
                 tr[i].style.display = "";
             } else {
                 tr[i].style.display = "none";

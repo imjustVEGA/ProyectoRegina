@@ -80,24 +80,15 @@
             </div>
         </div>
 
-        <div class="contenedor-filtros">
-            <div class="caja-busqueda">
-                <i data-feather="search"></i>
-                <input type="text" id="campoBuscar" placeholder="Buscar empleado..." onkeyup="filtrarEmpleados()">
-            </div>
-            <div class="caja-seleccion">
-                <i data-feather="building"></i>
-                <select id="seleccionDepto" onchange="filtrarEmpleados()">
+            <div class="search-container" style="margin-bottom: 20px; display: flex; gap: 10px;">
+                <input type="text" id="campoBuscar" placeholder="Buscar por nombre o ID..." onkeyup="filtrarEmpleados()" style="padding: 10px; flex: 1; border-radius: 8px; border: 1px solid #ccc;">
+                <select id="seleccionDepto" onchange="filtrarEmpleados()" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
                     <option value="">Todos los departamentos</option>
                 </select>
-            </div>
-            <div class="caja-seleccion">
-                <i data-feather="award"></i>
-                <select id="seleccionRango" onchange="filtrarEmpleados()">
+                <select id="seleccionRango" onchange="filtrarEmpleados()" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
                     <option value="">Todos los rangos</option>
                 </select>
             </div>
-        </div>
 
         <div class="contenedor-tabla">
             <table class="tabla-datos" id="tablaEmpleados">
@@ -129,7 +120,9 @@
             tbody.innerHTML = `<tr><td colspan="6" class="celda-carga">Cargando datos...</td></tr>`;
             
             try {
-                const empleados = await obtenerDatos();
+                const response = await fetch('http://localhost:3000/users');
+                if (!response.ok) throw new Error('Error al conectar con el servidor');
+                const empleados = await response.json();
                 datosOriginales = empleados;
                 renderizarTabla(empleados);
                 cargarFiltros(empleados);
