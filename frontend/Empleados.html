@@ -110,8 +110,7 @@
                         <th>NOMBRE COMPLETO</th>
                         <th>DEPARTAMENTO</th>
                         <th>NOMBRE DEL DEPARTAMENTO</th>
-                        <th>RANGO</th>
-                        <th>ACCIONES</th>
+                     
                     </tr>
                 </thead>
                 <tbody id="cuerpoTabla">
@@ -125,105 +124,14 @@
 
     <script src="dboperations.js"></script> 
     <script>
-        let datosOriginales = [];
-
-        async function cargarEmpleados() {
-            const tbody = document.getElementById('cuerpoTabla');
-            tbody.innerHTML = `<tr><td colspan="6" class="celda-carga">Cargando datos...</td></tr>`;
-            
-            try {
-                const response = await fetch('http://localhost:3000/users');
-                if (!response.ok) throw new Error('Error al conectar con el servidor');
-                const empleados = await response.json();
-                datosOriginales = empleados;
-                renderizarTabla(empleados);
-                cargarFiltros(empleados);
-                actualizarTarjetas(empleados);
-            } catch (error) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="6" class="celda-error">
-                            <div class="estado-error">
-                                <div class="envoltorio-icono-error"><i data-feather="inbox"></i></div>
-                                <h4>Ocurrió un error al cargar los datos.</h4>
-                                <p>${error.message || error}</p>
-                                <button class="btn-verde-azulado" onclick="cargarEmpleados()"><i data-feather="refresh-cw"></i> Reintentar</button>
-                            </div>
-                        </td>
-                    </tr>`;
-                feather.replace();
-            }
-        }
-
-        function actualizarTarjetas(lista) {
-            document.getElementById('estadisticaTotalEmpleados').innerText = lista.length;
-
-            const deptosUnicos = new Set(lista.map(emp => emp.departamento));
-            document.getElementById('estadisticaTotalDeptos').innerText = deptosUnicos.size;
-
-            const supervisores = lista.filter(emp => emp.rango == '14' || emp.rango === 14 || emp.rango.toString().toLowerCase().includes('supervisor'));
-            document.getElementById('estadisticaTotalSupervisores').innerText = supervisores.length;
-
-            document.getElementById('estadisticaNuevosMes').innerText = "0"; 
-        }
-
-        function renderizarTabla(lista) {
-            const tbody = document.getElementById('cuerpoTabla');
-            if (lista.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="celda-carga">No se encontraron empleados.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = lista.map(emp => `
-                <tr>
-                    <td>${emp.idempleado}</td>
-                    <td>${emp.nombreEmpleado}</td>
-                    <td>${emp.DepartID}</td>
-                    <td>${emp.departamento}</td>
-                    <td>${emp.rango}</td>
-                    <td class="celda-acciones">
-                        <button class="btn-accion-tabla" onclick="editarEmpleado('${emp.idempleado}')"><i data-feather="edit-2"></i></button>
-                    </td>
-                </tr>
-            `).join('');
-            feather.replace();
-        }
-
-        function cargarFiltros(lista) {
-            const deptos = [...new Set(lista.map(e => e.departamento))].filter(Boolean);
-            const rangos = [...new Set(lista.map(e => e.rango))].filter(Boolean);
-
-            const seleccionDepto = document.getElementById('seleccionDepto');
-            seleccionDepto.innerHTML = '<option value="">Todos los departamentos</option>' + 
-                deptos.map(d => `<option value="${d}">${d}</option>`).join('');
-
-            const seleccionRango = document.getElementById('seleccionRango');
-            seleccionRango.innerHTML = '<option value="">Todos los rangos</option>' + 
-                rangos.map(r => `<option value="${r}">${r}</option>`).join('');
-        }
-
-        function filtrarEmpleados() {
-            const busqueda = document.getElementById('campoBuscar').value.toLowerCase();
-            const deptoSel = document.getElementById('seleccionDepto').value;
-            const rangoSel = document.getElementById('seleccionRango').value;
-
-            const filtrados = datosOriginales.filter(emp => {
-                const nombreEmp = emp.nombreEmpleado ? emp.nombreEmpleado.toLowerCase() : "";
-                const idEmp = emp.idempleado ? emp.idempleado.toString() : "";
-                
-                const cumpleBusqueda = nombreEmp.includes(busqueda) || idEmp.includes(busqueda);
-                const cumpleDepto = deptoSel === "" || emp.departamento === deptoSel;
-                const cumpleRango = rangoSel === "" || emp.rango.toString() === rangoSel;
-                
-                return cumpleBusqueda && cumpleDepto && cumpleRango;
-            });
-
-            renderizarTabla(filtrados);
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             feather.replace();
-            cargarEmpleados();
+            // Call the cargarEmpleados function defined in dboperations.js which includes JWT handling.
+            if (typeof cargarEmpleados === 'function') {
+                cargarEmpleados();
+            } else {
+                console.error('cargarEmpleados function not found.');
+            }
         });
     </script>
 </body>

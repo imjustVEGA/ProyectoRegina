@@ -32,6 +32,7 @@ body {
     background-size: cover;
     background-position: center;
     position: relative;
+    background-image: url("C:/Users/omana/OneDrive/Escritorio/ProyectoRegina/imagenes/fotohotel.png");
 }
 
 .seccion-formulario {
@@ -193,8 +194,23 @@ body {
     width: 250px;
 }
 
-.img-logo {
-    height: 24px;
+/* Ensure navigation bar has a fixed height so the logo can fill it */
+.barra-navegacion-superior {
+    height: 64px; /* adjust as needed */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 0 40px; /* vertical padding removed to use fixed height */
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Resize the logo to fill the navigation bar height */
+.nav-izquierda .img-logo {
+    height: 100%;
     width: auto;
     object-fit: contain;
 }
