@@ -4,98 +4,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asistencias - Sistema Regina</title>
+    <title>Asistencias - Club Regina</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
 </head>
 
-<body class="dashboard-body">
-    <nav class="sidebar">
-        <div class="sidebar-header">
-            <div class="logo">
-                <i data-feather="box"></i>
-            </div>
-            <h2>Club Regina</h2>
+<body class="cuerpo-panel">
+    <nav class="barra-navegacion-superior">
+        <div class="nav-izquierda">
+            <img src="imagenes/logoooo.png" alt="" class="img-logo">
+            <span class="texto-logo">Club Regina</span>
         </div>
-        <ul class="nav-links">
+
+        <ul class="enlaces-nav">
             <li><a href="Menu.html"><i data-feather="home"></i> Inicio</a></li>
             <li><a href="Empleados.html"><i data-feather="users"></i> Empleados</a></li>
-            <li class="active"><a href="Asistencias.html"><i data-feather="clock"></i> Asistencias</a></li>
+            <li class="activo"><a href="Asistencias.html"><i data-feather="clock"></i> Asistencias</a></li>
             <li><a href="RegistroCR.html"><i data-feather="user-plus"></i> Registrar Empleado</a></li>
-            <li style="margin-top: auto; margin-bottom: 20px;"><a href="Login.html" class="logout"><i
-                        data-feather="log-out"></i> Cerrar Sesión</a></li>
         </ul>
+
+        <div class="nav-derecha">
+            <a href="Login.html" class="cerrar-sesion"><i data-feather="log-out"></i> Cerrar Sesión</a>
+        </div>
     </nav>
 
-    <main class="main-content">
-        <header class="top-header">
-            <h1>Control de Asistencias</h1>
-        </header>
+    <main class="contenido-principal">
+        <div class="recuadro-grande banner-asistencias">
+            <div class="destacado-izquierda">
+                <div class="icono-destacado icono-banner">
+                    <i data-feather="calendar"></i>
+                </div>
+                <div class="texto-destacado texto-banner">
+                    <h1>Control de Asistencias</h1>
+                </div>
+            </div>
+            <div class="destacado-derecha">
+                <button class="btn-contorno" onclick="cargarAsistencias()"><i data-feather="refresh-cw"></i> Actualizar</button>
+                <button class="btn-blanco" onclick="generarReporteAsistencias()"><i data-feather="download"></i> Reporte CSV</button>
+            </div>
+        </div>
 
-        <div class="content-card">
-            <div class="card-header"
-                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-                <h2 style="margin-bottom: 0;">Registro de Asistencias</h2>
-                <button class="submit-btn"
-                    style="width: auto; padding: 10px 20px; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; border-radius: 12px; background-color: #0b5c6b; color: white;"
-                    onclick="cargarAsistencias()">
-                    <i data-feather="refresh-cw" style="width: 16px; height: 16px; margin-right: 8px;"></i> Actualizar
-                </button>
+        <div class="search-container contenedor-filtros-asistencia">
+            <div class="caja-busqueda">
+                <i data-feather="search"></i>
+                <input type="text" id="busquedaAsistencia" placeholder="Buscar por nombre o ID..." onkeyup="filtrarAsistencias()">
+            </div>
+            
+            <div class="caja-seleccion">
+                <i data-feather="users"></i>
+                <select id="filtroDepartamentoAsistencia" onchange="filtrarAsistencias()">
+                    <option value="">Todas las áreas / puestos</option>
+                </select>
             </div>
 
-            <div class="filters-container" style="margin-bottom: 20px; display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
-                <div style="flex: 1; min-width: 200px;">
-                    <input type="text" id="busquedaAsistencia" placeholder="Buscar por nombre o ID..." onkeyup="filtrarAsistencias()" style="padding: 10px; width: 100%; border-radius: 8px; border: 1px solid #ccc;">
-                </div>
-                <div style="min-width: 200px;">
-                    <select id="filtroDepartamentoAsistencia" onchange="filtrarAsistencias()" style="padding: 10px; width: 100%; border-radius: 8px; border: 1px solid #ccc;">
-                        <option value="">Todas las áreas / puestos</option>
-                    </select>
-                </div>
-                
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <label for="fechaInicio" style="font-weight: 500; color: #4a5568;">Desde:</label>
-                    <input type="date" id="fechaInicio" onchange="filtrarAsistencias()" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
-                </div>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <label for="fechaFin" style="font-weight: 500; color: #4a5568;">Hasta:</label>
-                    <input type="date" id="fechaFin" onchange="filtrarAsistencias()" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
-                </div>
-                
-                <button class="submit-btn" style="width: auto; padding: 10px 20px; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; border-radius: 12px; background-color: #2b6cb0; color: white; border: none; cursor: pointer;" onclick="generarReporteAsistencias()">
-                    <i data-feather="download" style="width: 16px; height: 16px; margin-right: 8px;"></i> Reporte CSV
-                </button>
+            <div class="caja-fecha">
+                <label for="fechaInicio">Desde:</label>
+                <input type="date" id="fechaInicio" onchange="filtrarAsistencias()">
             </div>
 
-            <div class="table-responsive">
-                <table class="data-table" id="tablaAsistencias">
-                    <thead>
-                        <tr>
-                            <th>ID Empleado</th>
-                            <th>Nombre Completo</th>
-                            <th>Puesto</th>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                            <th>Verificación</th>
-                            <th>Estado</th>
-                            <th>Dispositivo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="8" style="text-align: center; padding: 30px; color: #718096;">Cargando datos...
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="caja-fecha">
+                <label for="fechaFin">Hasta:</label>
+                <input type="date" id="fechaFin" onchange="filtrarAsistencias()">
             </div>
+        </div>
+
+        <div class="contenedor-estadisticas">
+            <div class="tarjeta-estadistica">
+                <div class="icono-estadistica fondo-verde-azulado-claro"><i data-feather="users"></i></div>
+                <div class="datos-estadistica">
+                    <p class="titulo-estadistica">Total Registros</p>
+                    <h3 id="estadisticaTotal">0</h3>
+                    <p class="subtitulo-estadistica"><span class="punto-indicador"></span> Este rango de fechas</p>
+                </div>
+            </div>
+            <div class="tarjeta-estadistica">
+                <div class="icono-estadistica fondo-verde-azulado-claro"><i data-feather="calendar"></i></div>
+                <div class="datos-estadistica">
+                    <p class="titulo-estadistica">Asistencias</p>
+                    <h3 id="estadisticaAsistencias">0</h3>
+                    <p class="subtitulo-estadistica"><span class="punto-indicador"></span> Registros presentes</p>
+                </div>
+            </div>
+            <div class="tarjeta-estadistica">
+                <div class="icono-estadistica fondo-verde-azulado-claro"><i data-feather="x"></i></div>
+                <div class="datos-estadistica">
+                    <p class="titulo-estadistica">Ausencias</p>
+                    <h3 id="estadisticaAusencias">0</h3>
+                    <p class="subtitulo-estadistica"><span class="punto-indicador"></span> Registros ausentes</p>
+                </div>
+            </div>
+            <div class="tarjeta-estadistica">
+                <div class="icono-estadistica fondo-verde-azulado-claro"><i data-feather="clock"></i></div>
+                <div class="datos-estadistica">
+                    <p class="titulo-estadistica">Tardanzas</p>
+                    <h3 id="estadisticaTardanzas">0</h3>
+                    <p class="subtitulo-estadistica"><span class="punto-indicador"></span> Registros con tardanza</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contenedor-tabla">
+            <table class="tabla-datos" id="tablaAsistencias">
+                <thead>
+                    <tr>
+                        <th>ID EMPLEADO</th>
+                        <th>NOMBRE COMPLETO</th>
+                        <th>PUESTO</th>
+                        <th>FECHA</th>
+                        <th>HORA</th>
+                        <th>VERIFICACIÓN</th>
+                        <th>ESTADO</th>
+                        <th>DISPOSITIVO</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpoTablaAsistencias">
+                    <tr>
+                        <td colspan="8" class="celda-error">
+                            <div class="estado-error">
+                                <div class="envoltorio-icono-error">
+                                    <i data-feather="wifi-off"></i>
+                                </div>
+                                <h4>Ocurrió un error al cargar los datos.</h4>
+                                <p>Error al conectar con el servidor</p>
+                                <button class="btn-verde-azulado" onclick="cargarAsistencias()"><i data-feather="refresh-cw"></i> Reintentar</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </main>
 
     <script src="dboperations.js"></script>
     <script>
         feather.replace();
-        document.addEventListener('DOMContentLoaded', cargarAsistencias);
+        document.addEventListener('DOMContentLoaded', () => {
+            if(typeof cargarAsistencias === 'function'){
+                cargarAsistencias();
+            }
+        });
     </script>
 </body>
 

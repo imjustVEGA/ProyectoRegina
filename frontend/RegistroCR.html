@@ -1,75 +1,188 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Empleado - Sistema Regina</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
 </head>
-
 <body class="cuerpo-panel">
-    <nav class="barra-lateral">
-        <div class="cabecera-lateral"> 
-            <div class="logo">
-                <i data-feather="box"></i>
-            </div>
-            <h2>Club Regina</h2>
+    <nav class="barra-navegacion-superior">
+        <div class="nav-izquierda">
+            <img src="imagenes/logoooo.png" alt="" class="img-logo">
+            <span class="texto-logo">Club Regina</span>
         </div>
         <ul class="enlaces-nav">
             <li><a href="Menu.html"><i data-feather="home"></i> Inicio</a></li>
             <li><a href="Empleados.html"><i data-feather="users"></i> Empleados</a></li>
             <li><a href="Asistencias.html"><i data-feather="clock"></i> Asistencias</a></li>
             <li class="activo"><a href="RegistroCR.html"><i data-feather="user-plus"></i> Registrar Empleado</a></li>
-            <li style="margin-top: auto; margin-bottom: 20px;"><a href="Login.html" class="cerrar-sesion"><i data-feather="log-out"></i> Cerrar Sesión</a></li>
         </ul>
+        <div class="nav-derecha">
+            <a href="Login.html" class="cerrar-sesion"><i data-feather="log-out"></i> Cerrar Sesión</a>
+        </div>
     </nav>
 
     <main class="contenido-principal">
-        <header class="cabecera-superior">
-            <h1>Gestión de Empleados</h1>
-        </header>
+        <div class="banner-nuevo">
+            <div class="banner-botones-izq">
+                <button type="button" class="btn-contorno" onclick="document.getElementById('form-registro').reset();">
+                    <i data-feather="refresh-cw"></i> Limpiar
+                </button>
+            </div>
+            <div class="banner-centro">
+                <div class="icono-banner-nuevo">
+                    <i data-feather="user-plus"></i>
+                </div>
+                <h1 class="titulo-banner-nuevo">Registrar Empleado</h1>
+            </div>
+        </div>
 
-        <div class="tarjeta-contenido">
-            <div class="cabecera-tarjeta" style="margin-bottom: 25px;">
-                <h2 style="margin-bottom: 0;">Registrar Nuevo Empleado</h2>
+        <div class="tarjeta-registro">
+            <div class="titulo-seccion-form">
+                <div class="icono-seccion"><i data-feather="user"></i></div>
+                <h3>Información del Empleado</h3>
             </div>
             
-            <form action="" class="contenedor-formulario" style="max-width: 500px; margin: 0; padding: 0; box-shadow: none; background: transparent;">
-                <div class="bloque-entrada" style="position: relative; margin-bottom: 20px;">
-                    <i data-feather="hash" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0; width: 20px; height: 20px;"></i>
-                    <input type="text" id="idemployee" name="idemployee" placeholder="Número de empleado" style="padding-left: 45px; width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding-top: 15px; padding-bottom: 15px; background-color: #f8fafc; font-size: 1rem;">
+            <form id="form-registro" class="formulario-cuadricula">
+                <div class="grupo-formulario">
+                    <label class="etiqueta-form">Número de empleado</label>
+                    <div class="bloque-entrada-nuevo">
+                        <i data-feather="hash"></i>
+                        <input type="text" id="idemployee" name="idemployee" placeholder="Ej. EMP001" required>
+                    </div>
                 </div>
 
-                <div class="bloque-entrada" style="position: relative; margin-bottom: 20px;">
-                    <i data-feather="user" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0; width: 20px; height: 20px;"></i>
-                    <input type="text" id="name" name="name" placeholder="Nombre" style="padding-left: 45px; width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding-top: 15px; padding-bottom: 15px; background-color: #f8fafc; font-size: 1rem;">
+                <div class="grupo-formulario">
+                    <label class="etiqueta-form">Nombre completo</label>
+                    <div class="bloque-entrada-nuevo">
+                        <i data-feather="user"></i>
+                        <input type="text" id="name" name="name" placeholder="Ej. Juan Pérez García" required>
+                    </div>
                 </div>
 
-                <div class="bloque-entrada" style="position: relative; margin-bottom: 20px;">
-                    <i data-feather="user" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0; width: 20px; height: 20px;"></i>
-                    <input type="text" id="username" name="username" placeholder="Apellido" style="padding-left: 45px; width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding-top: 15px; padding-bottom: 15px; background-color: #f8fafc; font-size: 1rem;">
+                <div class="grupo-formulario">
+                    <label class="etiqueta-form">Usuario</label>
+                    <div class="bloque-entrada-nuevo">
+                        <i data-feather="user"></i>
+                        <input type="text" id="username" name="username" placeholder="Ej. jperez" required>
+                    </div>
                 </div>
 
-                <div class="bloque-entrada" style="position: relative; margin-bottom: 20px;">
-                    <i data-feather="briefcase" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0; width: 20px; height: 20px;"></i>
-                    <input type="text" id="department" name="department" placeholder="Departamento" style="padding-left: 45px; width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding-top: 15px; padding-bottom: 15px; background-color: #f8fafc; font-size: 1rem;">
+                <div class="grupo-formulario">
+                    <label class="etiqueta-form">Departamento</label>
+                    <div class="bloque-entrada-nuevo">
+                        <i data-feather="briefcase"></i>
+                        <select id="department" name="department" required>
+                            <option value="">Cargando departamentos...</option>
+                        </select>
+                    </div>
                 </div>
                 
-                <div class="bloque-entrada" style="position: relative; margin-bottom: 20px;">
-                    <i data-feather="lock" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0; width: 20px; height: 20px;"></i>
-                    <input type="password" id="password" name="password" placeholder="Contraseña temporal" style="padding-left: 45px; width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding-top: 15px; padding-bottom: 15px; background-color: #f8fafc; font-size: 1rem;">
+                <div class="grupo-formulario">
+                    <label class="etiqueta-form">Contraseña</label>
+                    <div class="bloque-entrada-nuevo">
+                        <i data-feather="lock"></i>
+                        <input type="password" id="password" name="password" placeholder="Ingresa una contraseña" required>
+                        <span class="toggle-password"><i data-feather="eye"></i></span>
+                    </div>
                 </div>
 
-                <button type="submit" class="btn-enviar" style="margin-top: 10px; width: 100%;">Registrar Empleado</button>
+                <div class="grupo-formulario">
+                    <label class="etiqueta-form">Confirmar contraseña</label>
+                    <div class="bloque-entrada-nuevo">
+                        <i data-feather="lock"></i>
+                        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirma la contraseña" required>
+                        <span class="toggle-password"><i data-feather="eye"></i></span>
+                    </div>
+                </div>
+
+                <div class="grupo-formulario campo-completo">
+                    <label class="etiqueta-form">Correo electrónico (opcional)</label>
+                    <div class="bloque-entrada-nuevo">
+                        <i data-feather="mail"></i>
+                        <input type="email" id="email" name="email" placeholder="Ej. juan.perez@empresa.com">
+                    </div>
+                </div>
+
+                <div class="campo-completo">
+                    <button type="submit" class="btn-cyan"><i data-feather="plus"></i> Registrar Empleado</button>
+                </div>
             </form>
         </div>
     </main>
 
     <script>
         feather.replace();
+
+        document.addEventListener('click', function(e) {
+            const toggleBtn = e.target.closest('.toggle-password');
+            if (toggleBtn) {
+                const input = toggleBtn.previousElementSibling;
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    toggleBtn.innerHTML = '<i data-feather="eye-off"></i>';
+                } else {
+                    input.type = 'password';
+                    toggleBtn.innerHTML = '<i data-feather="eye"></i>';
+                }
+                feather.replace();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const respuesta = await fetch('http://localhost:3000/api/departamentos');
+                const departamentos = await respuesta.json();
+                const select = document.getElementById('department');
+                select.innerHTML = '<option value="">Selecciona un departamento</option>';
+                departamentos.forEach(dep => {
+                    const option = document.createElement('option');
+                    option.value = dep.id_departamento;
+                    option.textContent = dep.nombre_departamento;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                document.getElementById('department').innerHTML = '<option value="">Error al cargar</option>';
+            }
+        });
+
+        document.getElementById('form-registro').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const pass = document.getElementById('password').value;
+            const confirmPass = document.getElementById('confirm_password').value;
+
+            if (pass !== confirmPass) {
+                alert('Las contraseñas no coinciden');
+                return;
+            }
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const respuesta = await fetch('http://localhost:3000/api/empleados', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (respuesta.ok) {
+                    alert('Empleado registrado exitosamente');
+                    e.target.reset();
+                } else {
+                    alert('Error al registrar empleado');
+                }
+            } catch (error) {
+                alert('Error de conexión con el servidor');
+            }
+        });
     </script>
 </body>
-
 </html>

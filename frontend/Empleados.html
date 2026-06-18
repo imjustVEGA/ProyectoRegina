@@ -7,6 +7,7 @@
     <title>Empleados - Club Regina</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
 </head>
 
@@ -14,7 +15,7 @@
     <nav class="barra-navegacion-superior">
         <div class="nav-izquierda">
             <img src="imagenes/logoooo.png" alt="" class="img-logo">
-            <span class="texto-logo">Logo Club Regina</span>
+            <span class="texto-logo">Club Regina</span>
         </div>
 
         <ul class="enlaces-nav">
@@ -30,12 +31,12 @@
     </nav>
 
     <main class="contenido-principal">
-        <div class="recuadro-grande">
+        <div class="recuadro-grande banner-asistencias">
             <div class="destacado-izquierda">
-                <div class="icono-destacado">
+                <div class="icono-destacado icono-banner">
                     <i data-feather="users"></i>
                 </div>
-                <div class="texto-destacado">
+                <div class="texto-destacado texto-banner">
                     <h1>Gestión de Empleados</h1>
                 </div>
             </div>
@@ -55,7 +56,7 @@
                 </div>
             </div>
             <div class="tarjeta-estadistica">
-                <div class="icono-estadistica fondo-gris-claro"><i data-feather="building"></i></div>
+                <div class="icono-estadistica fondo-verde-azulado-claro"><i data-feather="grid"></i></div>
                 <div class="datos-estadistica">
                     <h3 id="estadisticaTotalDeptos">0</h3>
                     <p class="titulo-estadistica">Departamentos</p>
@@ -63,15 +64,15 @@
                 </div>
             </div>
             <div class="tarjeta-estadistica">
-                <div class="icono-estadistica fondo-gris-claro"><i data-feather="award"></i></div>
+                <div class="icono-estadistica fondo-verde-azulado-claro"><i data-feather="award"></i></div>
                 <div class="datos-estadistica">
                     <h3 id="estadisticaTotalSupervisores">0</h3>
-                    <p class="titulo-estadistica">Supervisores</p>
+                    <p class="titulo-estadistica">Gerenciales</p>
                     <p class="subtitulo-estadistica">Con personal a cargo</p>
                 </div>
             </div>
             <div class="tarjeta-estadistica">
-                <div class="icono-estadistica fondo-gris-claro"><i data-feather="user-check"></i></div>
+                <div class="icono-estadistica fondo-verde-azulado-claro"><i data-feather="user-check"></i></div>
                 <div class="datos-estadistica">
                     <h3 id="estadisticaNuevosMes">0</h3>
                     <p class="titulo-estadistica">Nuevos este mes</p>
@@ -80,15 +81,26 @@
             </div>
         </div>
 
-            <div class="search-container" style="margin-bottom: 20px; display: flex; gap: 10px;">
-                <input type="text" id="campoBuscar" placeholder="Buscar por nombre o ID..." onkeyup="filtrarEmpleados()" style="padding: 10px; flex: 1; border-radius: 8px; border: 1px solid #ccc;">
-                <select id="seleccionDepto" onchange="filtrarEmpleados()" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+        <div class="search-container contenedor-filtros-asistencia" style="margin-bottom: 20px;">
+            <div class="caja-busqueda">
+                <i data-feather="search"></i>
+                <input type="text" id="campoBuscar" placeholder="Buscar por nombre o ID..." onkeyup="filtrarEmpleados()">
+            </div>
+            
+            <div class="caja-seleccion">
+                <i data-feather="briefcase"></i>
+                <select id="seleccionDepto" onchange="filtrarEmpleados()">
                     <option value="">Todos los departamentos</option>
                 </select>
-                <select id="seleccionRango" onchange="filtrarEmpleados()" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+            </div>
+
+            <div class="caja-seleccion">
+                <i data-feather="bar-chart"></i>
+                <select id="seleccionRango" onchange="filtrarEmpleados()">
                     <option value="">Todos los rangos</option>
                 </select>
             </div>
+        </div>
 
         <div class="contenedor-tabla">
             <table class="tabla-datos" id="tablaEmpleados">
