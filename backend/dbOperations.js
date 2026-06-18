@@ -36,3 +36,7 @@ export async function obtenerAsistencias() {
     return await runQuery(query);
 }
 
+export async function buscarUsuario(username) {
+    const query = "SELECT * FROM ADMINS WHERE username = @param0";
+    return await runQuery(query, [username]);
+}

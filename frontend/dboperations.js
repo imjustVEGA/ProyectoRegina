@@ -4,7 +4,21 @@ async function cargarEmpleados() {
     tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 30px; color: #718096;">Cargando datos...</td></tr>';
 
     try {
-        const response = await fetch('http://localhost:3000/users');
+        const token = localStorage.getItem('jwtToken');
+        if (!token) {
+            window.location.href = 'Login.html';
+            return;
+        }
+
+        const response = await fetch('http://localhost:3000/users', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (response.status === 401) {
+            localStorage.removeItem('jwtToken');
+            window.location.href = 'Login.html';
+            return;
+        }
         if (!response.ok) throw new Error('Error al conectar con el servidor');
 
         const datos = await response.json();
@@ -60,7 +74,21 @@ async function cargarAsistencias() {
     tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 30px; color: #718096;">Cargando datos...</td></tr>';
 
     try {
-        const response = await fetch('http://localhost:3000/asistencias');
+        const token = localStorage.getItem('jwtToken');
+        if (!token) {
+            window.location.href = 'Login.html';
+            return;
+        }
+
+        const response = await fetch('http://localhost:3000/asistencias', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (response.status === 401) {
+            localStorage.removeItem('jwtToken');
+            window.location.href = 'Login.html';
+            return;
+        }
         if (!response.ok) throw new Error('Error al conectar con el servidor');
 
         const datos = await response.json();

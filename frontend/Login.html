@@ -46,14 +46,28 @@
     </div>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
             
-            if (user === 'admin' && pass === 'admin123') {
-                window.location.href = 'Empleados.html';
-            } else {
+            try {
+                const response = await fetch('http://localhost:3000/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pass })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('jwtToken', data.token);
+                    window.location.href = 'Empleados.html';
+                } else {
+                    document.getElementById('errorMsg').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error al iniciar sesión:', error);
+                document.getElementById('errorMsg').innerText = 'Error de conexión con el servidor';
                 document.getElementById('errorMsg').style.display = 'block';
             }
         });
