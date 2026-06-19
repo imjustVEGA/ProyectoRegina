@@ -1,11 +1,3 @@
-/* =======================================================
-   dboperations.js  –  Club Regina
-   ======================================================= */
-
-/* -------------------------------------------------------
-   EMPLEADOS
-   ------------------------------------------------------- */
-
 async function cargarEmpleados() {
     const tbody = document.getElementById('cuerpoTabla');
     if (!tbody) return;
@@ -29,7 +21,6 @@ async function cargarEmpleados() {
 
         const datos = await response.json();
 
-        // -- 1. Llenar tabla --
         tbody.innerHTML = '';
         if (!datos || datos.length === 0) {
             tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:30px;color:#718096;">No se encontraron empleados.</td></tr>`;
@@ -53,10 +44,8 @@ async function cargarEmpleados() {
             });
         }
 
-        // -- 2. Actualizar tarjetas de estadísticas --
         actualizarEstadisticasEmpleados(datos);
 
-        // -- 3. Poblar filtro de departamentos --
         const deptSelect = document.getElementById('seleccionDepto');
         if (deptSelect) {
             deptSelect.innerHTML = '<option value="">Todos los departamentos</option>';
@@ -70,7 +59,6 @@ async function cargarEmpleados() {
             });
         }
 
-        // -- 4. Poblar filtro de rangos --
         const rangoSelect = document.getElementById('seleccionRango');
         if (rangoSelect) {
             rangoSelect.innerHTML = '<option value="">Todos los rangos</option>';
@@ -78,14 +66,12 @@ async function cargarEmpleados() {
             datos.forEach(e => { if (e.rango) rangos.add(e.rango); });
             rangos.forEach(r => {
                 const o = document.createElement('option');
-                //o.value = r.toLowerCase();
                 o.textContent = r;
                 rangoSelect.appendChild(o);
             });
         }
 
     } catch (error) {
-        console.error('Error al cargar empleados:', error);
         tbody.innerHTML = `
             <tr><td colspan="6" style="text-align:center;padding:30px;color:#e53e3e;">
                 Ocurrió un error al cargar los datos.<br>
@@ -95,23 +81,19 @@ async function cargarEmpleados() {
 }
 
 function actualizarEstadisticasEmpleados(datos) {
-    // Total empleados
     const elTotal = document.getElementById('estadisticaTotalEmpleados');
     if (elTotal) elTotal.textContent = datos.length;
 
-    // Departamentos únicos
     const depts = new Set();
     datos.forEach(e => { if (e.departamento) depts.add(e.departamento); });
     const elDeptos = document.getElementById('estadisticaTotalDeptos');
     if (elDeptos) elDeptos.textContent = depts.size;
 
-    // Rangos distintos (gerenciales / supervisores)
     const rangos = new Set();
     datos.forEach(e => { if (e.rango) rangos.add(e.rango); });
     const elSuper = document.getElementById('estadisticaTotalSupervisores');
     if (elSuper) elSuper.textContent = rangos.size;
 
-    // Nuevos en los últimos 30 días (usando fechaCreacion si existe)
     const ahora  = new Date();
     const hace30 = new Date(ahora);
     hace30.setDate(ahora.getDate() - 30);
@@ -156,12 +138,7 @@ function filtrarEmpleados() {
     }
 }
 
-/* -------------------------------------------------------
-   ASISTENCIAS
-   ------------------------------------------------------- */
-
 async function cargarAsistencias() {
-    // El tbody tiene id="cuerpoTablaAsistencias" en Asistencias.html
     const tbody = document.getElementById('cuerpoTablaAsistencias');
     if (!tbody) return;
 
@@ -206,10 +183,8 @@ async function cargarAsistencias() {
             tbody.appendChild(tr);
         });
 
-        // -- Actualizar tarjetas de estadísticas --
         actualizarEstadisticasAsistencias(datos);
 
-        // -- Poblar filtro de área/puesto --
         const areaSelect = document.getElementById('filtroDepartamentoAsistencia');
         if (areaSelect) {
             areaSelect.innerHTML = '<option value="">Todas las áreas / puestos</option>';
@@ -224,7 +199,6 @@ async function cargarAsistencias() {
         }
 
     } catch (error) {
-        console.error('Error al cargar asistencias:', error);
         tbody.innerHTML = `
             <tr><td colspan="8" style="text-align:center;padding:30px;color:#e53e3e;">
                 Ocurrió un error al cargar los datos.<br>
@@ -234,33 +208,43 @@ async function cargarAsistencias() {
 }
 
 function actualizarEstadisticasAsistencias(datos) {
-    // Total registros
     const elTotal = document.getElementById('estadisticaTotal');
     if (elTotal) elTotal.textContent = datos.length;
 
-    // Asistencias (estado = 'Presente' o similar)
-    const asistencias = datos.filter(d => {
+    const hoy = new Date();
+    const año = hoy.getFullYear();
+    const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+    const dia = String(hoy.getDate()).padStart(2, '0');
+    const fechaHoy = `${año}-${mes}-${dia}`;
+
+    const registrosDeHoy = datos.filter(d => {
+        if (!d.fecha) return false;
+        const fechaRegistro = d.fecha.split('T')[0].trim(); 
+        return fechaRegistro === fechaHoy;
+    });
+
+    const asistenciasHoy = registrosDeHoy.filter(d => {
         const e = (d.estado || '').toLowerCase();
         return e === 'presente' || e === 'asistencia' || e === 'a tiempo';
     }).length;
+    
     const elAsist = document.getElementById('estadisticaAsistencias');
-    if (elAsist) elAsist.textContent = asistencias;
+    if (elAsist) elAsist.textContent = asistenciasHoy;
 
-    // Ausencias
-    const ausencias = datos.filter(d => {
+    const ausenciasHoy = registrosDeHoy.filter(d => {
         const e = (d.estado || '').toLowerCase();
         return e === 'ausente' || e === 'ausencia' || e === 'falta';
     }).length;
+    
     const elAus = document.getElementById('estadisticaAusencias');
-    if (elAus) elAus.textContent = ausencias;
+    if (elAus) elAus.textContent = ausenciasHoy;
 
-    // Tardanzas
-    const tardanzas = datos.filter(d => {
+    const tardanzasHoy = registrosDeHoy.filter(d => {
         const e = (d.estado || '').toLowerCase();
         return e === 'tardanza' || e === 'tarde' || e === 'retraso';
     }).length;
     const elTard = document.getElementById('estadisticaTardanzas');
-    if (elTard) elTard.textContent = tardanzas;
+    if (elTard) elTard.textContent = tardanzasHoy;
 }
 
 function filtrarAsistencias() {
@@ -301,10 +285,6 @@ function filtrarAsistencias() {
     }
 }
 
-/* -------------------------------------------------------
-   REPORTE CSV
-   ------------------------------------------------------- */
-
 function generarReporteAsistencias() {
     const table = document.getElementById('tablaAsistencias');
     if (!table) return;
@@ -332,3 +312,4 @@ function generarReporteAsistencias() {
     link.click();
     document.body.removeChild(link);
 }
+

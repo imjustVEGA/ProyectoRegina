@@ -135,10 +135,17 @@
 
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                const respuesta = await fetch('http://localhost:3000/api/departamentos');
+                const token = localStorage.getItem('jwtToken');
+                const respuesta = await fetch('http://localhost:3000/api/departamentos', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (!respuesta.ok) throw new Error();
+                
                 const departamentos = await respuesta.json();
                 const select = document.getElementById('department');
                 select.innerHTML = '<option value="">Selecciona un departamento</option>';
+                
                 departamentos.forEach(dep => {
                     const option = document.createElement('option');
                     option.value = dep.id_departamento;
@@ -163,12 +170,14 @@
 
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
+            const token = localStorage.getItem('jwtToken');
 
             try {
                 const respuesta = await fetch('http://localhost:3000/api/empleados', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify(data)
                 });
