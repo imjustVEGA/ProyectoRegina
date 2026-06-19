@@ -1,3 +1,11 @@
+/* =======================================================
+   dboperations.js  –  Club Regina
+   ======================================================= */
+
+/* -------------------------------------------------------
+   EMPLEADOS
+   ------------------------------------------------------- */
+
 async function cargarEmpleados() {
     const tbody = document.getElementById('cuerpoTabla');
     if (!tbody) return;

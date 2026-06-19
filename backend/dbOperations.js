@@ -40,3 +40,30 @@ export async function buscarUsuario(username) {
     const query = "SELECT * FROM ADMINS WHERE username = @param0";
     return await runQuery(query, [username]);
 }
+
+export async function obtenerDepartamentos() {
+    const query = "SELECT DEPTID AS id_departamento, DEPTNAME AS nombre_departamento FROM DEPARTMENTS";
+    return await runQuery(query);
+}
+
+export async function crearEmpleado(datos) {
+    // Primero encriptar la contraseña si se guarda en ADMINS
+    const { idemployee, name, username, department, password } = datos;
+    const bcrypt = await import('bcrypt');
+    const hashedPassword = await bcrypt.hash(password, 10);
+    
+    // Separar nombre y apellido por espacio
+    const partesNombre = name.split(' ');
+    const nombre = partesNombre[0];
+    const apellido = partesNombre.slice(1).join(' ');
+
+    // Insertar en USERINFO
+    const queryUser = "INSERT INTO USERINFO (Badgenumber, name, lastname, DEFAULTDEPTID) VALUES (@param0, @param1, @param2, @param3)";
+    await runQuery(queryUser, [idemployee, nombre, apellido, department]);
+
+    // Insertar en ADMINS para que pueda loguearse
+    const queryAdmin = "INSERT INTO ADMINS (username, password) VALUES (@param0, @param1)";
+    await runQuery(queryAdmin, [username, hashedPassword]);
+
+    return { message: "Empleado registrado exitosamente" };
+}
