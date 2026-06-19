@@ -3,6 +3,6 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   root: 'frontend',
   server: {
-    open: '/Login.html'
+    open: '/RegistroCR.html'
   }
 });

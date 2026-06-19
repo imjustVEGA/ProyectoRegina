@@ -3,7 +3,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { runQuery, obtenerUsuarios, obtenerDatos, obtenerAsistencias, buscarUsuario } from './dbOperations.js';
+import { runQuery, obtenerUsuarios, obtenerDatos, obtenerAsistencias, buscarUsuario, obtenerDepartamentos, crearEmpleado } from './dbOperations.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -90,11 +90,25 @@ app.get('/users/:id', verificarToken, async (req, res) => {
 });
 
 
+app.get('/api/departamentos', async (req, res) => {
+    try {
+        const departamentos = await obtenerDepartamentos();
+        res.json(departamentos);
+    } catch (error) {
+        console.error("Error obteniendo departamentos:", error);
+        res.status(500).json({ error: 'Error al obtener los departamentos' });
+    }
+});
 
-  
-
-
-app.listen(PORT, () => {
+app.post('/api/empleados', async (req, res) => {
+    try {
+        const resultado = await crearEmpleado(req.body);
+        res.status(201).json(resultado);
+    } catch (error) {
+        console.error("Error al crear empleado:", error);
+        res.status(500).json({ error: 'Error al registrar el empleado' });
+    }
+});app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
 
