@@ -87,12 +87,6 @@
                 </select>
             </div>
 
-            <div class="caja-seleccion">
-                <i data-feather="bar-chart"></i>
-                <select id="seleccionRango" onchange="filtrarEmpleados()">
-                    <option value="">Todos los rangos</option>
-                </select>
-            </div>
         </div>
 
         <div class="contenedor-tabla">
@@ -102,13 +96,11 @@
                         <th>ID EMPLEADO</th>
                         <th>NOMBRE COMPLETO</th>
                         <th>DEPARTAMENTO</th>
-                        <th>NOMBRE DEL DEPARTAMENTO</th>
-                     
                     </tr>
                 </thead>
                 <tbody id="cuerpoTabla">
                     <tr>
-                        <td colspan="6" class="celda-carga">Cargando datos de la base de datos...</td>
+                        <td colspan="3" class="celda-carga">Cargando datos de la base de datos...</td>
                     </tr>
                 </tbody>
             </table>

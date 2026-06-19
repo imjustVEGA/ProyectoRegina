@@ -10,7 +10,7 @@ async function cargarEmpleados() {
     const tbody = document.getElementById('cuerpoTabla');
     if (!tbody) return;
 
-    tbody.innerHTML = `<tr><td colspan="6" class="celda-carga">Cargando datos...</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="3" class="celda-carga">Cargando datos...</td></tr>`;
 
     try {
         const token = localStorage.getItem('jwtToken');
@@ -31,22 +31,17 @@ async function cargarEmpleados() {
 
         tbody.innerHTML = '';
         if (!datos || datos.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:30px;color:#718096;">No se encontraron empleados.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;padding:30px;color:#718096;">No se encontraron empleados.</td></tr>`;
         } else {
             datos.forEach(emp => {
                 const tr = document.createElement('tr');
                 const nombre  = emp.nombreEmpleado || 'N/D';
-                const deptId  = emp.DepartID  !== null && emp.DepartID  !== undefined ? emp.DepartID  : 'N/D';
                 const deptNom = emp.departamento || 'N/D';
-                const rango   = emp.rango     !== null && emp.rango     !== undefined ? emp.rango     : 'N/D';
 
                 tr.innerHTML = `
                     <td><span class="badge badge-id"># ${emp.idempleado}</span></td>
                     <td style="font-weight:500;color:#2d3748;">${nombre}</td>
-                    <td>${deptId}</td>
                     <td>${deptNom}</td>
-                    <td><span class="badge badge-role">${rango}</span></td>
-                    <td></td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -67,6 +62,7 @@ async function cargarEmpleados() {
             });
         }
 
+        // -- 4. Poblar filtro de rangos --
         const rangoSelect = document.getElementById('seleccionRango');
         if (rangoSelect) {
             rangoSelect.innerHTML = '<option value="">Todos los rangos</option>';
@@ -74,6 +70,7 @@ async function cargarEmpleados() {
             datos.forEach(e => { if (e.rango) rangos.add(e.rango); });
             rangos.forEach(r => {
                 const o = document.createElement('option');
+                //o.value = r.toLowerCase();
                 o.textContent = r;
                 rangoSelect.appendChild(o);
             });
@@ -81,7 +78,7 @@ async function cargarEmpleados() {
 
     } catch (error) {
         tbody.innerHTML = `
-            <tr><td colspan="6" style="text-align:center;padding:30px;color:#e53e3e;">
+            <tr><td colspan="3" style="text-align:center;padding:30px;color:#e53e3e;">
                 Ocurrió un error al cargar los datos.<br>
                 <small>${error.message}</small>
             </td></tr>`;
@@ -131,18 +128,15 @@ function filtrarEmpleados() {
         if (filas[i].cells.length <= 1) continue;
 
         const tdNombre = filas[i].cells[1];
-        const tdDepto  = filas[i].cells[3];
-        const tdRango  = filas[i].cells[4];
+        const tdDepto  = filas[i].cells[2];
 
         const nombre = tdNombre ? (tdNombre.textContent || '').toLowerCase() : '';
         const depto  = tdDepto  ? (tdDepto.textContent  || '').toLowerCase() : '';
-        const rango  = tdRango  ? (tdRango.textContent  || '').toLowerCase() : '';
 
         const coincideTexto = nombre.includes(textoBuscar);
         const coincideDepto = deptFiltro  === '' || depto.includes(deptFiltro);
-        const coincideRango = rangoFiltro === '' || rango.includes(rangoFiltro);
 
-        filas[i].style.display = (coincideTexto && coincideDepto && coincideRango) ? '' : 'none';
+        filas[i].style.display = (coincideTexto && coincideDepto) ? '' : 'none';
     }
 }
 
