@@ -306,3 +306,169 @@ function generarReporteAsistencias() {
     link.click();
     document.body.removeChild(link);
 }
+
+/* -------------------------------------------------------
+   DASHBOARD
+   ------------------------------------------------------- */
+
+async function cargarDashboard() {
+    try {
+        const token = localStorage.getItem('jwtToken');
+        if (!token) { window.location.href = 'Login.html'; return; }
+
+        // Fetch usuarios
+        const reqUsers = fetch('http://localhost:3000/users', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        // Fetch asistencias
+        const reqAsist = fetch('http://localhost:3000/asistencias', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        const [resUsers, resAsist] = await Promise.all([reqUsers, reqAsist]);
+
+        if (resUsers.status === 401 || resAsist.status === 401) {
+            localStorage.removeItem('jwtToken');
+            window.location.href = 'Login.html';
+            return;
+        }
+
+        const usuarios = await resUsers.json();
+        const asistencias = await resAsist.json();
+
+        // Calcular metricas
+        const totalEmpleados = usuarios.length;
+        if(document.getElementById('empleadosActivosNum')) document.getElementById('empleadosActivosNum').textContent = totalEmpleados;
+        if(document.getElementById('empleadosActivosNum2')) document.getElementById('empleadosActivosNum2').textContent = totalEmpleados;
+
+        // Fecha de hoy para filtrar
+        const hoy = new Date().toISOString().split('T')[0];
+        
+        // Asistencias de hoy
+        const asistenciasHoy = asistencias.filter(a => a.fecha && a.fecha.startsWith(hoy));
+        
+        const numAsistenciasHoy = asistenciasHoy.filter(a => {
+            const est = (a.estado || '').toLowerCase();
+            return est === 'presente' || est === 'asistencia' || est === 'a tiempo' || est === 'tardanza' || est === 'tarde';
+        }).length;
+        
+        const numAusenciasHoy = asistenciasHoy.filter(a => {
+            const est = (a.estado || '').toLowerCase();
+            return est === 'ausente' || est === 'ausencia' || est === 'falta';
+        }).length;
+
+        const porcentajeAsistencia = totalEmpleados > 0 ? Math.round((numAsistenciasHoy / totalEmpleados) * 100) : 0;
+        const porcentajeAusencia = totalEmpleados > 0 ? Math.round((numAusenciasHoy / totalEmpleados) * 100) : 0;
+        
+        const aTiempo = asistenciasHoy.filter(a => {
+            const est = (a.estado || '').toLowerCase();
+            return est === 'presente' || est === 'asistencia' || est === 'a tiempo';
+        }).length;
+        const porcentajePuntualidad = numAsistenciasHoy > 0 ? Math.round((aTiempo / numAsistenciasHoy) * 100) : 100;
+
+        if(document.getElementById('asistenciasHoyNum')) document.getElementById('asistenciasHoyNum').textContent = numAsistenciasHoy;
+        if(document.getElementById('porcentajeAsistencia')) document.getElementById('porcentajeAsistencia').textContent = porcentajeAsistencia;
+        if(document.getElementById('barraAsistencia')) document.getElementById('barraAsistencia').style.width = porcentajeAsistencia + '%';
+
+        if(document.getElementById('ausenciasHoyNum')) document.getElementById('ausenciasHoyNum').textContent = numAusenciasHoy;
+        if(document.getElementById('porcentajeAusencia')) document.getElementById('porcentajeAusencia').textContent = porcentajeAusencia;
+        if(document.getElementById('barraAusencia')) document.getElementById('barraAusencia').style.width = porcentajeAusencia + '%';
+
+        if(document.getElementById('porcentajePuntualidad')) document.getElementById('porcentajePuntualidad').textContent = porcentajePuntualidad;
+        if(document.getElementById('barraPuntualidad')) document.getElementById('barraPuntualidad').style.width = porcentajePuntualidad + '%';
+
+        // Llenar lista recientes
+        const listaRecientes = document.getElementById('listaAsistenciasRecientes');
+        if (listaRecientes) {
+            listaRecientes.innerHTML = '';
+            const recientes = asistenciasHoy.slice(-5).reverse(); // Tomar ultimos 5
+            
+            if (recientes.length === 0) {
+                listaRecientes.innerHTML = '<div style="text-align:center; padding: 20px; color: #6b7280;">No hay registros recientes hoy.</div>';
+            } else {
+                recientes.forEach(a => {
+                    const estClass = (a.estado || '').toLowerCase().includes('ausente') ? 'ausente' : 
+                                   (a.estado || '').toLowerCase().includes('tarde') || (a.estado || '').toLowerCase().includes('tardanza') ? 'tarde' : 'presente';
+                    
+                    const html = `
+                    <div class="item-reciente">
+                        <div class="perfil-reciente">
+                            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(a.nomEmpleado || 'U')}&background=random" alt="User">
+                            <div class="info-perfil">
+                                <h4>${a.nomEmpleado || 'Desconocido'}</h4>
+                                <p>${a.puesto || 'Sin puesto'}</p>
+                            </div>
+                        </div>
+                        <div class="datos-reciente">
+                            <p>${a.hora || '--:--'}</p>
+                            <span class="estado-badge ${estClass}">${a.estado || 'N/D'}</span>
+                        </div>
+                    </div>`;
+                    listaRecientes.insertAdjacentHTML('beforeend', html);
+                });
+            }
+        }
+
+        // Grafico de dona (por área)
+        const areasCount = {};
+        let totalAsistenciasArea = 0;
+        
+        asistenciasHoy.forEach(a => {
+            if (a.puesto) {
+                areasCount[a.puesto] = (areasCount[a.puesto] || 0) + 1;
+                totalAsistenciasArea++;
+            }
+        });
+
+        const ctx = document.getElementById('graficoAsistencias');
+        if (ctx && Object.keys(areasCount).length > 0) {
+            const labels = Object.keys(areasCount);
+            const data = Object.values(areasCount);
+            const colors = ['#0b5c6b', '#f59e0b', '#3b82f6', '#ef4444', '#10b981', '#8b5cf6'];
+            
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors.slice(0, labels.length),
+                        borderWidth: 0,
+                        cutout: '75%'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: true }
+                    }
+                }
+            });
+
+            // Generar leyenda
+            const leyenda = document.getElementById('leyendaGrafico');
+            if (leyenda) {
+                leyenda.innerHTML = '';
+                labels.forEach((label, idx) => {
+                    const perc = Math.round((data[idx] / totalAsistenciasArea) * 100);
+                    leyenda.innerHTML += `
+                    <div class="item-leyenda">
+                        <div><span class="punto" style="background-color: ${colors[idx]}"></span> ${label}</div>
+                        <strong>${perc}%</strong>
+                    </div>`;
+                });
+            }
+
+            if(document.getElementById('promedioGeneralAsistencia')) document.getElementById('promedioGeneralAsistencia').textContent = porcentajeAsistencia + '%';
+        } else if (ctx) {
+             const leyenda = document.getElementById('leyendaGrafico');
+             if(leyenda) leyenda.innerHTML = '<div style="font-size:0.8rem;color:#6b7280;text-align:center;">No hay datos para graficar hoy</div>';
+        }
+
+    } catch (error) {
+        console.error('Error al cargar dashboard:', error);
+    }
+}
