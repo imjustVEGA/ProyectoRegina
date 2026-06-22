@@ -6,39 +6,140 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Principal - Sistema Regina</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body class="cuerpo-panel"> 
-    <nav class="barra-lateral">
-        <div class="cabecera-lateral">
-            <div class="logo">
-                <i data-feather="box"></i>
-            </div>
-            <h2>Club Regina</h2>
+<body class="cuerpo-dashboard"> 
+    <nav class="barra-navegacion-superior">
+        <div class="nav-izquierda">
+            <img src="imagenes/logoooo.png" alt="" class="img-logo">
+            <span class="texto-logo">Club Regina</span>
         </div>
+
         <ul class="enlaces-nav">
             <li class="activo"><a href="Menu.html"><i data-feather="home"></i> Inicio</a></li>
             <li><a href="Empleados.html"><i data-feather="users"></i> Empleados</a></li>
             <li><a href="Asistencias.html"><i data-feather="clock"></i> Asistencias</a></li>
             <li><a href="RegistroCR.html"><i data-feather="user-plus"></i> Registrar Empleado</a></li>
-            <li style="margin-top: auto; margin-bottom: 20px;"><a href="Login.html" class="cerrar-sesion"><i data-feather="log-out"></i> Cerrar Sesión</a></li>
         </ul>
+
+        <div class="nav-derecha">
+            <a href="Login.html" class="cerrar-sesion"><i data-feather="log-out"></i> Cerrar Sesión</a>
+        </div>
     </nav>
 
-    <main class="contenido-principal">
-        <header class="cabecera-superior">
-            <h1>Bienvenido al Menú Principal</h1>
+    <main class="contenido-dashboard">
+        <div class="dashboard-bg"></div>
+        <header class="cabecera-dashboard">
+            <div class="saludo">
+                <span class="buenos-dias">¡Buenos días! <i data-feather="sun" style="color: #fbbf24;"></i></span>
+                <h1>Bienvenido al control de <span>asistencias</span></h1>
+                <p class="area-comedor">Área de Comedor</p>
+                <p class="subtitulo-header">Gestiona, visualiza y analiza las asistencias<br>de nuestro equipo para brindar siempre<br>la mejor experiencia.</p>
+            </div>
+            <div class="controles-superiores">
+                <div class="widget-info">
+                    <i data-feather="calendar"></i> <span id="fechaActual"></span> | 
+                    <i data-feather="sun"></i> 28°C | 
+                    <span>Cancún, México</span>
+                </div>
+                <div class="usuario-perfil">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff" alt="Perfil">
+                </div>
+                <a href="Login.html" class="btn-logout" title="Cerrar Sesión"><i data-feather="log-out"></i></a>
+            </div>
         </header>
 
-        <div class="tarjeta-contenido">
-            <h2>Selecciona una opción en el menú izquierdo</h2>
-            <p>Aquí puedes poner tu contenido principal para el inicio.</p>
-        </div>
+        <section class="tarjetas-metricas">
+            <div class="tarjeta-metrica">
+                <div class="icono-metrica bg-teal"><i data-feather="users"></i></div>
+                <div class="info-metrica">
+                    <p>Asistencia hoy</p>
+                    <h3><span id="porcentajeAsistencia">0</span>% <small><span id="asistenciasHoyNum">0</span> / <span id="empleadosActivosNum2">0</span></small></h3>
+                    <div class="barra-progreso"><div class="progreso bg-teal" id="barraAsistencia" style="width: 0%"></div></div>
+                </div>
+            </div>
+            <div class="tarjeta-metrica">
+                <div class="icono-metrica bg-yellow"><i data-feather="calendar"></i></div>
+                <div class="info-metrica">
+                    <p>Empleados totales</p>
+                    <h3><span id="empleadosActivosNum">0</span> <small>Activos</small></h3>
+                    <div class="barra-progreso"><div class="progreso bg-yellow" style="width: 100%"></div></div>
+                </div>
+            </div>
+            <div class="tarjeta-metrica">
+                <div class="icono-metrica bg-blue"><i data-feather="clipboard"></i></div>
+                <div class="info-metrica">
+                    <p>Ausencias hoy</p>
+                    <h3><span id="ausenciasHoyNum">0</span> <small><span id="porcentajeAusencia">0</span>% del total</small></h3>
+                    <div class="barra-progreso"><div class="progreso bg-blue" id="barraAusencia" style="width: 0%"></div></div>
+                </div>
+            </div>
+            <div class="tarjeta-metrica">
+                <div class="icono-metrica bg-green"><i data-feather="check-circle"></i></div>
+                <div class="info-metrica">
+                    <p>Puntualidad</p>
+                    <h3><span id="porcentajePuntualidad">0</span>% <small>Excelente</small></h3>
+                    <div class="barra-progreso"><div class="progreso bg-green" id="barraPuntualidad" style="width: 0%"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid-inferior">
+            <div class="tarjeta-dashboard flex-col">
+                <div class="cabecera-tarjeta">
+                    <div class="icono-titulo"><i data-feather="pie-chart"></i></div>
+                    <h3>Asistencias por área</h3>
+                </div>
+                <div class="contenido-grafico">
+                    <div class="grafico-container">
+                        <canvas id="graficoAsistencias" width="160" height="160"></canvas>
+                        <div class="centro-dona">
+                            <h2 id="promedioGeneralAsistencia">0%</h2>
+                            <p>Promedio general</p>
+                        </div>
+                    </div>
+                    <div class="leyenda-grafico" id="leyendaGrafico">
+                        <!-- Generado dinamicamente -->
+                    </div>
+                </div>
+                <div class="pie-tarjeta"><a href="#">Ver detalle <i data-feather="chevron-right"></i></a></div>
+            </div>
+
+            <div class="tarjeta-dashboard flex-col">
+                <div class="cabecera-tarjeta">
+                    <div class="icono-titulo"><i data-feather="clock"></i></div>
+                    <h3>Asistencias recientes</h3>
+                </div>
+                <div class="lista-recientes" id="listaAsistenciasRecientes">
+                    <div style="text-align:center; padding: 20px;">Cargando...</div>
+                </div>
+                <div class="pie-tarjeta"><a href="Asistencias.html">Ver todos <i data-feather="chevron-right"></i></a></div>
+            </div>
+
+            <div class="tarjeta-motivacional">
+                <div class="texto-motivacional">
+                    <h2>Un equipo presente,<br>es un servicio<br>inolvidable. <i data-feather="heart"></i></h2>
+                    <p>Gracias por ser parte<br>de experiencias<br>excepcionales.</p>
+                </div>
+            </div>
+        </section>
     </main>
 
+    <script src="dboperations.js"></script>
     <script>
         feather.replace();
+        document.addEventListener('DOMContentLoaded', () => {
+            const f = new Date();
+            const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('fechaActual').textContent = f.toLocaleDateString('es-ES', opciones);
+            
+            if(typeof cargarDashboard === 'function'){
+                cargarDashboard();
+            }
+        });
     </script>
 </body>
 
