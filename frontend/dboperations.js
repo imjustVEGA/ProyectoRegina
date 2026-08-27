@@ -353,12 +353,18 @@ async function cargarDashboard() {
             return est === 'presente' || est === 'asistencia' || est === 'a tiempo' || est === 'tardanza' || est === 'tarde';
         }).length;
         
-        const numAusenciasHoy = asistenciasHoy.filter(a => {
+        // Empleados únicos que asistieron hoy
+        const empleadosPresentes = new Set();
+        asistenciasHoy.forEach(a => {
             const est = (a.estado || '').toLowerCase();
-            return est === 'ausente' || est === 'ausencia' || est === 'falta';
-        }).length;
+            if (est === 'presente' || est === 'asistencia' || est === 'a tiempo' || est === 'tardanza' || est === 'tarde') {
+                empleadosPresentes.add(a.idEmpleado || a.nomEmpleado); // Usamos ID o nombre para contar
+            }
+        });
+        
+        const numAusenciasHoy = totalEmpleados - empleadosPresentes.size;
 
-        const porcentajeAsistencia = totalEmpleados > 0 ? Math.round((numAsistenciasHoy / totalEmpleados) * 100) : 0;
+        const porcentajeAsistencia = totalEmpleados > 0 ? Math.round((empleadosPresentes.size / totalEmpleados) * 100) : 0;
         const porcentajeAusencia = totalEmpleados > 0 ? Math.round((numAusenciasHoy / totalEmpleados) * 100) : 0;
         
         const aTiempo = asistenciasHoy.filter(a => {
