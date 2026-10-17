@@ -5,6 +5,12 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { runQuery, obtenerUsuarios, obtenerDatos, obtenerAsistencias, buscarUsuario, obtenerDepartamentos, crearEmpleado } from './dbOperations.js';
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -108,9 +114,17 @@ app.post('/api/empleados', async (req, res) => {
         console.error("Error al crear empleado:", error);
         res.status(500).json({ error: 'Error al registrar el empleado' });
     }
-});app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
 
+// Servir archivos estáticos del frontend construido en producción
+const frontendPath = path.join(__dirname, '../frontend/dist');
+app.use(express.static(frontendPath));
 
+// Cualquier otra ruta redirige al frontend (para Single Page Applications o manejo en el cliente)
+app.use((req, res) => {
+    res.sendFile(path.join(frontendPath, 'Login.html'));
+});
 
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+});

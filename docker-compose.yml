@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      # Puedes mapear las variables de entorno para la BD aquí si lo necesitas
+      - PORT=3000
+      # - DB_USER=tu_usuario
+      # - DB_PASSWORD=tu_password
+      # - DB_SERVER=tu_servidor
+      # - DB_DATABASE=tu_base
+    restart: always

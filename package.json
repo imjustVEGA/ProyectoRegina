@@ -5,7 +5,8 @@
     "dev:frontend": "vite",
     "dev:backend": "node backend/index.js",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "start": "node backend/index.js"
+    "start": "node backend/index.js",
+    "build": "vite build"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
