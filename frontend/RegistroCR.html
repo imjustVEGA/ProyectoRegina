@@ -116,8 +116,13 @@
     </main>
 
     <script>
+        // Inicializar iconos de Feather
         feather.replace();
 
+        /**
+         * Alterna la visibilidad de la contraseña (mostrar/ocultar texto plano).
+         * Detecta clics en los botones con clase `.toggle-password`, alternando entre 'password' y 'text'.
+         */
         document.addEventListener('click', function(e) {
             const toggleBtn = e.target.closest('.toggle-password');
             if (toggleBtn) {
@@ -133,6 +138,10 @@
             }
         });
 
+        /**
+         * Carga dinámica del catálogo de departamentos al inicializar la página.
+         * Realiza una petición GET a `/api/departamentos` y crea elementos `<option>` en el `<select id="department">`.
+         */
         document.addEventListener('DOMContentLoaded', async () => {
             try {
                 const token = localStorage.getItem('jwtToken');
@@ -157,22 +166,35 @@
             }
         });
 
+        /**
+         * Manejador del envío del formulario de registro de empleados.
+         * 
+         * Funcionalidad:
+         * 1. Intercepta el evento `submit` para evitar la recarga de página.
+         * 2. Comprueba que las contraseñas coincidan (`password === confirm_password`).
+         * 3. Convierte los datos del formulario a un objeto JSON.
+         * 4. Envía una petición POST a `/api/empleados` para persistir en la base de datos.
+         * 5. Muestra retroalimentación mediante alerta y limpia el formulario tras el registro exitoso.
+         */
         document.getElementById('form-registro').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const pass = document.getElementById('password').value;
             const confirmPass = document.getElementById('confirm_password').value;
 
+            // Validación de coincidencia de contraseñas
             if (pass !== confirmPass) {
                 alert('Las contraseñas no coinciden');
                 return;
             }
 
+            // Construcción del objeto de datos
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
             const token = localStorage.getItem('jwtToken');
 
             try {
+                // Envío de datos al backend
                 const respuesta = await fetch('http://localhost:3000/api/empleados', {
                     method: 'POST',
                     headers: {

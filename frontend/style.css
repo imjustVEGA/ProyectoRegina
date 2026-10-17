@@ -1068,8 +1068,8 @@ button svg {
     left: 50%;
     transform: translateX(-50%);
     width: 100vw;
-    height: 450px;
-    background-image: url('../imagenes/club-regina-cancun.webp');
+    height: 550px;
+    background-image: url('../imagenes/Foto7inicio.webp');
     background-size: cover;
     background-position: center;
     z-index: -1;
@@ -1180,19 +1180,20 @@ button svg {
 
 .tarjetas-metricas {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-bottom: 30px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-bottom: 40px;
 }
 
 .tarjeta-metrica {
     background: white;
     border-radius: 15px;
-    padding: 30px;
+    padding: 20px;
     display: flex;
     align-items: flex-start;
     gap: 20px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    min-height: 140px;
 }
 
 .icono-metrica {
@@ -1254,7 +1255,7 @@ button svg {
 
 .grid-inferior {
     display: grid;
-    grid-template-columns: 1fr 1.2fr 0.8fr;
+    grid-template-columns: 1fr;
     gap: 20px;
 }
 
@@ -1446,6 +1447,7 @@ button svg {
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     position: relative;
     overflow: hidden;
+    min-height: 250px;
 }
 
 .tarjeta-motivacional::before {
@@ -1465,7 +1467,7 @@ button svg {
 
 .texto-motivacional h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
+    font-size: 2.4rem; /* Fuente más grande */
     line-height: 1.4;
     margin-bottom: 20px;
 }

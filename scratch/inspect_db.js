@@ -1,6 +1,14 @@
 import 'dotenv/config';
 import { runQuery } from '../dbOperations.js';
 
+/**
+ * Script de diagnóstico para listar todas las tablas base y verificar la estructura de CHECKINOUT.
+ * 
+ * Funcionalidad:
+ * 1. Consulta INFORMATION_SCHEMA.TABLES para obtener todas las tablas del tipo 'BASE TABLE'.
+ * 2. Imprime la lista de tablas en formato JSON con indentación.
+ * 3. Si existe la tabla `CHECKINOUT`, consulta e imprime sus columnas y tipos de datos.
+ */
 async function inspectDB() {
     try {
         console.log("Listing tables...");
@@ -13,10 +21,11 @@ async function inspectDB() {
             console.log(JSON.stringify(cols, null, 2));
         }
     } catch (err) {
-        console.error(err);
+        console.error("Error durante la inspección de la base de datos:", err);
     } finally {
         process.exit();
     }
 }
 
 inspectDB();
+
