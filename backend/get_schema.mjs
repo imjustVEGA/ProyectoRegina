@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { runQuery } from './dbOperations.js';
 
 /**

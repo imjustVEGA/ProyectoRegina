@@ -14,7 +14,7 @@
 <body class="cuerpo-dashboard"> 
     <nav class="barra-navegacion-superior">
         <div class="nav-izquierda">
-            <img src="imagenes/logoooo.png" alt="" class="img-logo">
+            <img src="imagenes/logoooo.png" alt="" class="img-logo" onerror="this.style.display='none'">
             <span class="texto-logo">Club Regina</span>
         </div>
 
@@ -73,11 +73,47 @@
                     <div class="barra-progreso"><div class="progreso bg-blue" id="barraAusencia" style="width: 0%"></div></div>
                 </div>
             </div>
-
+            <div class="tarjeta-metrica">
+                <div class="icono-metrica bg-green"><i data-feather="check-circle"></i></div>
+                <div class="info-metrica">
+                    <p>Puntualidad</p>
+                    <h3><span id="porcentajePuntualidad">0</span>% <small>A tiempo</small></h3>
+                    <div class="barra-progreso"><div class="progreso bg-green" id="barraPuntualidad" style="width: 0%"></div></div>
+                </div>
+            </div>
         </section>
 
         <section class="grid-inferior">
+            <div class="tarjeta-dashboard flex-col">
+                <div class="cabecera-tarjeta">
+                    <div class="icono-titulo"><i data-feather="pie-chart"></i></div>
+                    <h3>Asistencias por área</h3>
+                </div>
+                <div class="contenido-grafico">
+                    <div class="grafico-container">
+                        <canvas id="graficoAsistencias" width="160" height="160"></canvas>
+                        <div class="centro-dona">
+                            <h2 id="promedioGeneralAsistencia">0%</h2>
+                            <p>Promedio general</p>
+                        </div>
+                    </div>
+                    <div class="leyenda-grafico" id="leyendaGrafico">
+                        <!-- Generado dinámicamente -->
+                    </div>
+                </div>
+                <div class="pie-tarjeta"><a href="Asistencias.html">Ver detalle <i data-feather="chevron-right"></i></a></div>
+            </div>
 
+            <div class="tarjeta-dashboard flex-col">
+                <div class="cabecera-tarjeta">
+                    <div class="icono-titulo"><i data-feather="clock"></i></div>
+                    <h3>Asistencias recientes</h3>
+                </div>
+                <div class="lista-recientes" id="listaAsistenciasRecientes">
+                    <div style="text-align:center; padding: 20px; color: #6b7280;">Cargando...</div>
+                </div>
+                <div class="pie-tarjeta"><a href="Asistencias.html">Ver todos <i data-feather="chevron-right"></i></a></div>
+            </div>
 
             <div class="tarjeta-motivacional">
                 <div class="texto-motivacional">
@@ -92,6 +128,12 @@
     <script>
         feather.replace();
         document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('jwtToken');
+            if (!token) {
+                window.location.href = 'Login.html';
+                return;
+            }
+
             const f = new Date();
             const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('fechaActual').textContent = f.toLocaleDateString('es-ES', opciones);

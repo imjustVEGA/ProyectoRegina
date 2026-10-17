@@ -36,8 +36,12 @@ const JWT_SECRET = process.env.JWT_SECRET || 'supersecreto_para_desarrollo';
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
+    if (!username || !password) {
+        return res.status(400).json({ error: 'Usuario y contraseña requeridos' });
+    }
+
     try {
-        const users = await buscarUsuario(username);
+        const users = await buscarUsuario(typeof username === 'string' ? username.trim() : username);
         
         // Verificar si el usuario existe en la base de datos
         if (users.length === 0) {
@@ -158,7 +162,7 @@ app.get('/api/departamentos', async (req, res) => {
  * Recibe los datos del empleado (número de empleado, nombre, usuario, departamento, password)
  * y los registra en las tablas USERINFO y ADMINS.
  */
-app.post('/api/empleados', async (req, res) => {
+app.post('/api/empleados', verificarToken, async (req, res) => {
     try {
         const resultado = await crearEmpleado(req.body);
         res.status(201).json(resultado);
@@ -166,7 +170,9 @@ app.post('/api/empleados', async (req, res) => {
         console.error("Error al crear empleado:", error);
         res.status(500).json({ error: 'Error al registrar el empleado' });
     }
-});app.listen(PORT, () => {
+});
+
+app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
 

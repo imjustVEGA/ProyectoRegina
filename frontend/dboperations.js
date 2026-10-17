@@ -181,13 +181,15 @@ function filtrarEmpleados() {
     for (let i = 1; i < filas.length; i++) {
         if (filas[i].cells.length <= 1) continue;
 
+        const tdID     = filas[i].cells[0];
         const tdNombre = filas[i].cells[1];
         const tdDepto  = filas[i].cells[2];
 
+        const id     = tdID     ? (tdID.textContent     || '').toLowerCase() : '';
         const nombre = tdNombre ? (tdNombre.textContent || '').toLowerCase() : '';
         const depto  = tdDepto  ? (tdDepto.textContent  || '').toLowerCase() : '';
 
-        const coincideTexto = nombre.includes(textoBuscar);
+        const coincideTexto = nombre.includes(textoBuscar) || id.includes(textoBuscar);
         const coincideDepto = deptFiltro  === '' || depto.includes(deptFiltro);
 
         filas[i].style.display = (coincideTexto && coincideDepto) ? '' : 'none';
@@ -258,7 +260,7 @@ async function cargarAsistencias() {
                 <td>${asis.hora      || 'N/D'}</td>
                 <td><span class="badge badge-role">${asis.verificacion || 'N/D'}</span></td>
                 <td><span class="badge badge-role">${asis.estado       || 'N/D'}</span></td>
-                <td>${asis.dispotivo || 'N/D'}</td>
+                <td>${asis.dispositivo || asis.dispotivo || 'N/D'}</td>
             `;
             tbody.appendChild(tr);
         });
@@ -625,3 +627,27 @@ async function cargarDashboard() {
         console.error('Error al cargar dashboard:', error);
     }
 }
+
+/* ============================================================================
+   5. AUTENTICACIÓN Y CONTROL DE SESIÓN
+   ============================================================================ */
+
+/**
+ * Cierra la sesión activa del usuario eliminando el token JWT y redirigiendo al Login.
+ * 
+ * @function cerrarSesion
+ * @param {Event} [e] - Evento opcional para prevenir navegación directa si aplica.
+ */
+function cerrarSesion(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    localStorage.removeItem('jwtToken');
+    window.location.href = 'Login.html';
+}
+
+// Vincular automáticamente el cierre de sesión a todos los elementos con clase .cerrar-sesion o .btn-logout
+document.addEventListener('click', function(e) {
+    const btnCerrar = e.target.closest('.cerrar-sesion, .btn-logout');
+    if (btnCerrar) {
+        cerrarSesion(e);
+    }
+});

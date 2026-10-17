@@ -12,7 +12,7 @@
 <body class="cuerpo-panel">
     <nav class="barra-navegacion-superior">
         <div class="nav-izquierda">
-            <img src="imagenes/logoooo.png" alt="" class="img-logo">
+            <img src="imagenes/logoooo.png" alt="" class="img-logo" onerror="this.style.display='none'">
             <span class="texto-logo">Club Regina</span>
         </div>
         <ul class="enlaces-nav">
@@ -115,6 +115,7 @@
         </div>
     </main>
 
+    <script src="dboperations.js"></script>
     <script>
         // Inicializar iconos de Feather
         feather.replace();
@@ -143,8 +144,13 @@
          * Realiza una petición GET a `/api/departamentos` y crea elementos `<option>` en el `<select id="department">`.
          */
         document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('jwtToken');
+            if (!token) {
+                window.location.href = 'Login.html';
+                return;
+            }
+
             try {
-                const token = localStorage.getItem('jwtToken');
                 const respuesta = await fetch('http://localhost:3000/api/departamentos', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });

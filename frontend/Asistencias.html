@@ -14,7 +14,7 @@
 <body class="cuerpo-panel">
     <nav class="barra-navegacion-superior">
         <div class="nav-izquierda">
-            <img src="imagenes/logoooo.png" alt="" class="img-logo">
+            <img src="imagenes/logoooo.png" alt="" class="img-logo" onerror="this.style.display='none'">
             <span class="texto-logo">Club Regina</span>
         </div>
 
@@ -79,7 +79,7 @@
                     <p class="subtitulo-estadistica"><span class="punto-indicador"></span> Este rango de fechas</p>
                 </div>
             </div>
-        <div class="tarjeta-estadistica">
+            <div class="tarjeta-estadistica">
                 <div class="icono-estadistica fondo-verde-azulado-claro"><i data-feather="calendar"></i></div>
                 <div class="datos-estadistica">
                     <p class="titulo-estadistica">Asistencias</p>
@@ -93,6 +93,14 @@
                     <p class="titulo-estadistica">Ausencias</p>
                     <h3 id="estadisticaAusencias">0</h3>
                     <p class="subtitulo-estadistica"><span class="punto-indicador"></span> Registros ausentes</p>
+                </div>
+            </div>
+            <div class="tarjeta-estadistica">
+                <div class="icono-estadistica fondo-verde-azulado-claro"><i data-feather="clock"></i></div>
+                <div class="datos-estadistica">
+                    <p class="titulo-estadistica">Tardanzas</p>
+                    <h3 id="estadisticaTardanzas">0</h3>
+                    <p class="subtitulo-estadistica"><span class="punto-indicador"></span> Registros con tardanza</p>
                 </div>
             </div>
         </div>

@@ -18,5 +18,6 @@ export async function getConnection() {
         return pool;
     } catch (error) {
         console.error("Error de conexión:", error);
+        throw error;
     }
 }
